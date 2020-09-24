@@ -1,0 +1,11 @@
+.containerBox {
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+.btnBox {
+    margin: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
