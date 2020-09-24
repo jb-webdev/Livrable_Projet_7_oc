@@ -1,7 +1,6 @@
 /**
  * @author j.boero
  * 
- * 
  * Composant qui affiche tous les tutilisateur à l'administrateur
  * 
  */

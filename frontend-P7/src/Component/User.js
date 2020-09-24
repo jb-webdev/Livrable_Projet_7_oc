@@ -1,3 +1,10 @@
+/**
+ * @author j.boero
+ * 
+ * Compo Page utilisateur
+ * 
+ * Point d'entrée de la page utilisateur après connection
+ */
 import React, { Component } from 'react'
 import Headers from './UserComponent/Headers/Headers'
 import Body from './UserComponent/Body/Body'

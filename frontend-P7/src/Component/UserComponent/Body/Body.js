@@ -1,3 +1,11 @@
+/**
+ * @author j.boero
+ * 
+ * Compo Body
+ * 
+ * Contient le corp de la page utilisateur
+ * 
+ */
 import React, { Component } from 'react'
 import AvatarUser from './logo192.png';
 // import MessageToMap from "./MessageToMap";

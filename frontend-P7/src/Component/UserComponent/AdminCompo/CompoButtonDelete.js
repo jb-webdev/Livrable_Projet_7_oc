@@ -1,7 +1,6 @@
 /**
  * @author j.boero
  * 
- * 
  * Composant delete
  * Pour ne concerne que la section administrateur
  * 

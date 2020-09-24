@@ -1,8 +1,7 @@
 /**
  * @author j.boero
  * 
- * 
- * Composant qui affiche le donnee utilisateur dans le header
+ * Composant qui affiche les donnees utilisateur dans le header
  * 
  */
 import React from 'react'

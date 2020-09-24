@@ -1,7 +1,6 @@
 /**
  * @author j.boero
  * 
- * 
  * Composant acceuil all Users
  * 
  */

@@ -1,7 +1,6 @@
 /**
  * @author j.boero
  * 
- * 
  * Composant pour la section envoie d'un message
  * 
  */
