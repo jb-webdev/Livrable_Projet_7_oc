@@ -1,8 +1,7 @@
 /**
  * @author j.boero
  * 
- * 
- * Composant qui affiche la page de connexion utilisateur
+ * Composant qui affiche la page de connexion login utilisateur
  * 
  */
 import React, { Component } from 'react';
@@ -34,15 +33,11 @@ export default class LoginUser extends Component {
             email: this.state.email,
             password: this.state.password,               
         }; 
-        console.log( ">>> avant requete => " + userLogin.email)
+        // console.log( ">>> avant requete => " + userLogin.email)
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer {{token}}");
         myHeaders.append("Content-Type", "application/json");
-
-        // const urlencoded = new URLSearchParams();
-        // urlencoded.append("email", userLogin.email);
-        // urlencoded.append("password", userLogin.password);
 
         const requestOptions = {
         method: 'POST',
@@ -57,7 +52,14 @@ export default class LoginUser extends Component {
             return response.json();
         })
         .then(json => {
-            console.log(json);  
+            console.log(json.username);
+            if (json.username ) {
+                sessionStorage.setItem("connect", true);
+                sessionStorage.setItem("userId", json.userId);
+                sessionStorage.setItem("username", json.username);
+                sessionStorage.setItem("email", json.email);
+                sessionStorage.setItem("token", json.token);
+            }
         })
         .catch(error => console.log('error', error));
             }

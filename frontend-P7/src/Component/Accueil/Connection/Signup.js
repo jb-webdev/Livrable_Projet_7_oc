@@ -8,8 +8,6 @@
 import React, { Component } from 'react';
 import LogoGroup from './bigLogoRed.png';
 
-
-
 export default class SignupUser extends Component {
     state = {
         userSignup : [],

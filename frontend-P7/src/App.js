@@ -11,7 +11,7 @@ import './App.css';
 import {BrowserRouter as Router, Route, Switch} from'react-router-dom';
 import Navigation from './Component/Navigation/Navigation';
 import Accueil from './Component/Accueil/Accueil'
-import User from './Component/User'
+// import User from './Component/User'
 import ErrorPage from './Component/ErrorPage/ErrorPage';
 
 
@@ -44,7 +44,7 @@ class  App extends Component {
               <Switch>
 
                 <Route exact path="/" component={Accueil} />
-                <Route exact path="/user" component={User} />
+                {/* <Route exact path="/user" component={User} /> */}
 
 
                 {/* <Route exact path="/user" render={()=>(

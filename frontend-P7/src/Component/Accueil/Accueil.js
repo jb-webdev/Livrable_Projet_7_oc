@@ -13,18 +13,20 @@ import CompoConnection from './Connection/CompoConnection';
 
 
 export default class Accueil extends Component {
+    
     state = {
-        userConnect : false,
-        
+        userConnect : this.sessionsto,
     }
-
-
+    sessionsto = () => {
+        this.setState(
+            this.userConnect = false
+        )
+    }
     render() {
+        
         return (
             <div className="container">
-                {this.state.userConnect ? (<h1>hello page user</h1>) : (<CompoConnection />)}
-                    
-                
+                {this.state.userConnect? (<h1>hello page user</h1>) : (<CompoConnection />)}
             </div>
         )
     }

@@ -11,6 +11,7 @@ import Body from './UserComponent/Body/Body'
 import CompoBoxAllUser from './UserComponent/AdminCompo/CompoBoxAllUsers'
 
 export default class User extends Component {
+    
     state = {
         id: true,
         isAdmin : true,
