@@ -10,8 +10,10 @@ import React, { Component } from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from'react-router-dom';
 import Navigation from './Component/Navigation/Navigation';
-import Accueil from './Component/Accueil/Accueil'
-// import User from './Component/User'
+// import Accueil from './Component/Accueil/Accueil';
+import SignupUser from './Component/Connection/Signup'
+import LoginUser from './Component/Connection/Login';
+import User from './Component/User';
 import ErrorPage from './Component/ErrorPage/ErrorPage';
 
 
@@ -27,11 +29,6 @@ class  App extends Component {
         }
       }
     }
-
-  
-
-  
- 
   render(){
     
       return (
@@ -42,17 +39,10 @@ class  App extends Component {
               <Navigation />
 
               <Switch>
-
-                <Route exact path="/" component={Accueil} />
-                {/* <Route exact path="/user" component={User} /> */}
-
-
-                {/* <Route exact path="/user" render={()=>(
-                    this.state.constPages.false ? ( <Redirect to="/" />) : (<User /> )
-                )} /> */}
-                
-                <Route component={ErrorPage} />
-              
+                    <Route path="/" exact component={SignupUser} />
+                    <Route path="/login" exact component={LoginUser} />
+                    <Route path="/user" exact component={User}/>
+                    <Route component={ErrorPage} />
               </Switch>
 
             </Router>
