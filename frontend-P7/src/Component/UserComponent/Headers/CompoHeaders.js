@@ -9,15 +9,15 @@ import React from 'react'
 export function CompoUsername({label}) {
     return (
         <div>
-            <h4 className="mb-0 1h-100" name="userMessage">{label}</h4>
+            <h4 className="mb-0 1h-100" name="username">{label}</h4>
         </div>
     )
 }
 
-export function CompoInscription({label}) {
+export function CompoBIo({label}) {
     return (
         <div>
-            <h6>Membre depuis le {label}</h6>
+            <h6 className="mb-0 1h-100" name="bio">{label}</h6>
         </div>
     )
 }

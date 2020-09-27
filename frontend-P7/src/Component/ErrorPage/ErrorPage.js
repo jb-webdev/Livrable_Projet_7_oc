@@ -7,26 +7,37 @@
  * pour obliger l'utilisateur à s'authentifier
  */
 
-import React from 'react'
-import './ErrorPage.js';
+import React, { Component } from 'react';
+import './ErrorPage.css';
 
 
-const ErrorPage = (props) => {
-    setTimeout(() =>{
-        props.history.push('/')
-    }, 3000);
+// const ErrorPage = (props) => {
+class ErrorPage extends Component  {  
+    constructor(props){
+        super(props);
+        return setTimeout(() =>{
+            this.props.history.push('/')
+        }, 3000);
+    }
+    
+    
+    
+    render () {
+        
+        return (
 
-    return (
-        <div className="container">
-            <div className="alert alert-danger alert-dismissible fade show my-3" role="alert">
-                <strong style={{color:"red"}}>  Oups!</strong> Vous ne vous êtes pas connecter! veuillez utiliser vos identifiant !.
-                <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div className="container">
+                <div className="alert alert-danger alert-dismissible fade show my-3" role="alert">
+                    <strong style={{color:"red"}}>  Oups!</strong> Vous ne vous êtes pas connecter! veuillez utiliser vos identifiant !.
+                    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <h1>Oups !!</h1>
             </div>
-            <h1>Oups !!</h1>
-        </div>
-    )
+        )
+    }
 }
+
 
 export default ErrorPage

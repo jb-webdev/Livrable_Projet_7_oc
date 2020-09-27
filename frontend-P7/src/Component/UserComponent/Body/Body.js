@@ -16,8 +16,8 @@ import CompoButtonDeleteUser from '../AdminCompo/CompoButtonDelete';
 export default class Body extends Component {
 
     state ={  // renseigne toutes les infos utilisateur de la page ici
-        isAdmin : true,
-        idUser : '212',   
+        isAdmin : sessionStorage.getItem("isAdmin"),
+        idUser : sessionStorage.getItem('userId'),   
       
 
         showMessage : true,
@@ -79,7 +79,7 @@ export default class Body extends Component {
                                         <strong className="d-block text-gray-dark" key={allMessages.idMessage}>{allMessages.title}</strong>
                                         <p>{allMessages.content}</p>
                                     </div>
-                                    {this.state.isAdmin ? <CompoButtonDeleteUser/> : <p></p> }
+                                    {this.state.isAdmin == 1 ? <CompoButtonDeleteUser/> : <p></p> }
                                 </div> 
                             )} 
                         </div>

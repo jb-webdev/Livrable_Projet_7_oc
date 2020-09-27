@@ -15,6 +15,7 @@ import SignupUser from './Component/Connection/Signup'
 import LoginUser from './Component/Connection/Login';
 import User from './Component/User';
 import ErrorPage from './Component/ErrorPage/ErrorPage';
+import Spinner from './Component/Connection/Spinner'
 
 
 
@@ -35,13 +36,15 @@ class  App extends Component {
         <div className="Container">
           
             <Router>
-
+              
               <Navigation />
 
               <Switch>
                     <Route path="/" exact component={SignupUser} />
                     <Route path="/login" exact component={LoginUser} />
                     <Route path="/user" exact component={User}/>
+                    <Route path="/chargement" exact component={Spinner}/>
+
                     <Route component={ErrorPage} />
               </Switch>
 

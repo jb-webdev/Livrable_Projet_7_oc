@@ -8,23 +8,32 @@
 import React, { Component } from 'react'
 import Headers from './UserComponent/Headers/Headers'
 import Body from './UserComponent/Body/Body'
-import CompoBoxAllUser from './UserComponent/AdminCompo/CompoBoxAllUsers'
+import CompoBoxAllUsers from './UserComponent/AdminCompo/CompoBoxAllUsers';
+// import {Link} from'react-router-dom';
+import ErrorPage from './ErrorPage/ErrorPage';
 
 export default class User extends Component {
-    
     state = {
-        id: true,
-        isAdmin : true,
-    }
+        userConnect: sessionStorage.getItem("connect"),
+        isAdmin: sessionStorage.getItem("isAdmin"),
+        userId: sessionStorage.getItem("userId"),
+        username : sessionStorage.getItem("username"),
+        email: sessionStorage.getItem("email"),
+        token : sessionStorage.getItem("token"),
+    }; 
     
-    render() {
 
-            return (
-                <div className="container mt-3">
-                    <Headers/>
-                    {this.state.isAdmin ? <CompoBoxAllUser /> : null}
-                    <Body />
-                </div>
+    render() { 
+        return (
+            <div>
+                {this.state.userConnect ? (
+                    <div className="container mt-3">
+                        <Headers/> 
+                        {this.state.isAdmin == 1 ? (<CompoBoxAllUsers />) : null}
+                        <Body />
+                    </div>
+                ) : (<ErrorPage/>)}
+                </div>  
             )
         }
 }

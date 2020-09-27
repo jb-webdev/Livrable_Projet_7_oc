@@ -13,19 +13,20 @@ import './Connection.css';
 export default class SignupUser extends Component {
     constructor(props){
         super(props);
+
+        this.state = {
+            SignupUser : "" ,
+            userSignup : [],
+            email: '',
+            username: '',
+            password: '',
+            bio: '',
+            isAdmin: '0',
+            items:[]
+        }
         
     }
 
-    state = {
-        SignupUser : "" ,
-        userSignup : [],
-        email: '',
-        username: '',
-        password: '',
-        bio: '',
-        isAdmin: '0',
-        items:[]
-    }
     // on écoute le changement de valeur dans les inputs
     
     onChange = (event) => {
@@ -33,7 +34,7 @@ export default class SignupUser extends Component {
             [event.target.name] : event.target.value
         });
         // console.log(this.state.name)
-    }
+    } //function onChange
       // on ecoute l'evenement du bouton 
     onSubmit = (event) => {
         event.preventDefault();
@@ -71,21 +72,27 @@ export default class SignupUser extends Component {
             
             fetch("http://localhost:4200/api/user/signup", requestOptions)
             .then(response => {
-                console.log(response.status);
                 if (response.status === 200){
-                    this.props.history.push('/user')
+                    this.props.history.push('/chargement')
                 }
+                console.log(response.status);
                 return response.json();
             })
             .then(json => {
-                console.log(json);
+                if (json.username ) {
+                    sessionStorage.setItem("connect", true);
+                    sessionStorage.setItem("userId", json.userId);
+                    sessionStorage.setItem("username", json.username);
+                    sessionStorage.setItem("bio", json.bio);
+                    sessionStorage.setItem("email", json.email);
+                    sessionStorage.setItem("token", json.token);
+                
+                }
             })
-            .catch(error => console.log('error', error)); 
-    }
-    redirect = () => {
+            .catch(error => console.log('error', error));
         
-        console.log(">>> controle state >>>" + this.state.SignupUser)
-    }
+    
+    } 
 
     render() {
         
