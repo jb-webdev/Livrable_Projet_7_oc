@@ -23,6 +23,7 @@ export default class Body extends Component {
 
         showMessage : true,
         allMessageApi : [],
+        modifyMessage : false,
     
     }
     
@@ -121,14 +122,22 @@ export default class Body extends Component {
                                         <strong className="d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.title}>{allMessages.title}</strong>
                                         <p key={allMessages.idMESSAGE + allMessages.content}>{allMessages.content}</p>
                                     </div>
-                                    {this.state.isAdmin == 1 ? (
-                                        <div>
+                                    {this.state.isAdmin == 1 || this.state.idUser == allMessages.idAuthor? (
+                                        
+                                    <div className="modifyBox">
+                                        <button 
+                                            className="btn btnBox w-10 btn-sm btn-outline-primary btn-block mt-3" 
+                                            type="onclick"
+                                            name={allMessages.idMESSAGE}
+                                        >
+                                            modifier
+                                        </button>
                                         <button onClick={this.suppMessage}
                                             className="btn btnBox w-10 btn-sm btn-outline-danger btn-block mt-3" 
                                             type="onclick"
                                             name={allMessages.idMESSAGE}
                                         >
-                                            Delete
+                                            Supprimer
                                         </button>
                                     </div>
                                     ) : <p></p> }

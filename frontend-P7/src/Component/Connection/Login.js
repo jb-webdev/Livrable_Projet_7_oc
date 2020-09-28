@@ -14,7 +14,7 @@ export default class LoginUser extends Component {
     constructor(props){
         super(props);
         this.state = {
-            connectStatus : 0,
+            connectStatus : 1,
             email: '',
             password: '',
             items: []
@@ -39,8 +39,7 @@ export default class LoginUser extends Component {
             email: this.state.email,
             password: this.state.password,               
         }; 
-        console.log(">>> connectStatus => " + this.state.connectStatus)
-        console.log( ">>> avant requete => " + userLogin.email)
+        console.log(">>> avant requete => " + userLogin.email)
         console.log(">>> connectStatus => " + this.state.password)
         
         const myHeaders = new Headers();
@@ -57,15 +56,15 @@ export default class LoginUser extends Component {
         
         fetch("http://localhost:4200/api/user/login", requestOptions)
         .then(response => {
-            const responseStat = response.status;
             console.log(response.status);
-            console.log(responseStat);
-            if (response.status == 200){
+            
+            if (response.status === 200){
                 this.props.history.push('/chargement')
                 console.log(">>> response dans la conditon fetch 200 => ok ca marche")
             }
-            if (response.status != 200){
-                this.props.history.push('/error')
+            if (response.status !== 200){
+                // this.props.history.push('/error')
+                alert("Connection impossible ! veuillez verifier vos identifiants !")
             }
             console.log(response.json);
             return response.json();
