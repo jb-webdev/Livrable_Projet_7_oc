@@ -34,7 +34,7 @@ export default class Headers extends Component {
     //     // });
     // }
     render() {
-        console.log( "dans le setset" + sessionStorage.getItem("isAdmin"));
+        // console.log( "dans le setset" + sessionStorage.getItem("isAdmin"));
         return (
             <div className="d-flex align-items-center p-3 my-3 text-50 rounded shadow-sm"  style={{backgroundColor: "#d8d8d8", border:"2px solid #d1515a"}}>
                 <img className="mr-3" src={AvatarUser} alt="avatar user" width="48" height="48"/>
@@ -49,7 +49,7 @@ export default class Headers extends Component {
                     type="submit" 
                     to="/" 
                     name="accueil"
-                    onClick={() => {{sessionStorage.clear()}}}
+                    onClick={() => {sessionStorage.clear()}}
                     >sign out !</Link> 
             </div>
         )

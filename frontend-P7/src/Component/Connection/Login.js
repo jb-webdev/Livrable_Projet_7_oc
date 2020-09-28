@@ -18,8 +18,7 @@ export default class LoginUser extends Component {
             email: '',
             password: '',
             items: []
-        }     
-       
+        }   
     }
     
     // on écoute le changement de valeur dans les inputs
@@ -40,7 +39,9 @@ export default class LoginUser extends Component {
             email: this.state.email,
             password: this.state.password,               
         }; 
-        // console.log( ">>> avant requete => " + userLogin.email
+        console.log(">>> connectStatus => " + this.state.connectStatus)
+        console.log( ">>> avant requete => " + userLogin.email)
+        console.log(">>> connectStatus => " + this.state.password)
         
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer {{token}}");
@@ -56,20 +57,16 @@ export default class LoginUser extends Component {
         
         fetch("http://localhost:4200/api/user/login", requestOptions)
         .then(response => {
-            
-            if (response.status === 200){
-                this.setState({
-                    connectStatus : true,
-                })
-                this.props.history.push('/chargement')
-            }else {
-                this.setState({
-                    connectStatus : false,
-                })
-                this.props.history.push('/ErrorPage')
-            }
-            
+            const responseStat = response.status;
             console.log(response.status);
+            console.log(responseStat);
+            if (response.status == 200){
+                this.props.history.push('/chargement')
+                console.log(">>> response dans la conditon fetch 200 => ok ca marche")
+            }
+            if (response.status != 200){
+                this.props.history.push('/error')
+            }
             console.log(response.json);
             return response.json();
         })
@@ -77,26 +74,22 @@ export default class LoginUser extends Component {
             
             if (json.username ) {
                 sessionStorage.setItem("connect", true);
+                sessionStorage.setItem("isAdmin", json.isAdmin);
                 sessionStorage.setItem("userId", json.userId);
                 sessionStorage.setItem("username", json.username);
                 sessionStorage.setItem("email", json.email);
-                sessionStorage.setItem("token", json.token);
                 sessionStorage.setItem("bio", json.bio);
-                sessionStorage.setItem("isAdmin", json.isAdmin);
+                sessionStorage.setItem("token", json.token);
             }
-            
         })
         .catch(error => console.log('error', error));
     }
     
     render() {
-        console.log(">>> connectStatus => " + this.state.connectStatus)
+        
         return (
             
             <div>
-                
-                {/* {this.state.connectStatus === 200 ? (this.props.history.push('/user')) :  (null) } */}
-
                 <div className="row justify-content-center">
                     
                     <form onSubmit={this.onSubmit}>
@@ -122,7 +115,12 @@ export default class LoginUser extends Component {
                             value={this.state.password} 
                         />
 
-                        <button className="btn btn-lg btn-outline-success btn-block mt-3" type="submit" >se connecter !</button>
+                        <button 
+                        className="btn btn-lg btn-outline-success btn-block mt-3" 
+                        type="submit" 
+                        >
+                            se connecter !
+                        </button>
 
                         <p className="mt-3 mb-3 text-muted text-center">@Groupomania 2020</p>
                         

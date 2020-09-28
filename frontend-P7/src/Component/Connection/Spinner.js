@@ -1,3 +1,10 @@
+/**
+ * @author j.boero
+ * 
+ * Compo Page spinner
+ 
+ * 
+ */
 import React, { Component } from 'react'
 import './Spinner.css'
 
@@ -7,10 +14,11 @@ export default class spinner extends Component {
         super(props);
         setTimeout(() =>{
             this.props.history.push('/user')
-        }, 2000);
+        }, 500);
+        this.state = {
+            message : sessionStorage.getItem("msgRetour")
+        }
     }
-   
-
     render() {
         
         return (
@@ -18,6 +26,7 @@ export default class spinner extends Component {
                 <div className="spinner-border text-success" role="status">
                     <span className="sr-only">Loading...</span>
                 </div>
+                {this.state.message !== null ? (<h4>{this.state.message}</h4>) : null}
                 <p>Chargement .....</p>
             </div>
         )

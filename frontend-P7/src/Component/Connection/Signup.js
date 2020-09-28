@@ -45,6 +45,7 @@ export default class SignupUser extends Component {
             password: this.state.password,
             items: [...this.state.items, {username: this.state.username, email: this.state.email, bio: this.state.bio, password: this.state.password}]
         });
+        console.log(this.state.bio)
         // début initialisation de la requête fetch
         
             const email = this.state.email;
@@ -83,15 +84,12 @@ export default class SignupUser extends Component {
                     sessionStorage.setItem("connect", true);
                     sessionStorage.setItem("userId", json.userId);
                     sessionStorage.setItem("username", json.username);
-                    sessionStorage.setItem("bio", json.bio);
                     sessionStorage.setItem("email", json.email);
+                    sessionStorage.setItem("bio", json.bio);
                     sessionStorage.setItem("token", json.token);
-                
                 }
             })
             .catch(error => console.log('error', error));
-        
-    
     } 
 
     render() {
@@ -122,7 +120,7 @@ export default class SignupUser extends Component {
                             name="bio"
                             
                             onChange={this.onChange}
-                            value={this.state.bioSignup} 
+                            value={this.state.bio} 
                         />
                         <label className="sr-only" htmlFor="email">Adresse email</label>
                         <input className="form-control mt-3" 
@@ -144,7 +142,12 @@ export default class SignupUser extends Component {
                             value={this.state.password} 
                         />
 
-                        <button className="btn btn-lg btn-outline-success btn-block mt-3" type="submit" >S'enregistrer ! !</button>
+                        <button 
+                        className="btn btn-lg btn-outline-success btn-block mt-3" 
+                        type="submit" 
+                        >
+                            S'enregistrer ! 
+                        </button>
 
                         <p className="mt-3 mb-3 text-muted text-center">@Groupomania 2020</p>
 

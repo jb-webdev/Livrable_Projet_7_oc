@@ -15,9 +15,10 @@ import './ErrorPage.css';
 class ErrorPage extends Component  {  
     constructor(props){
         super(props);
-        return setTimeout(() =>{
+        
+        setTimeout(() =>{
             this.props.history.push('/')
-        }, 3000);
+        }, 2000);
     }
     
     

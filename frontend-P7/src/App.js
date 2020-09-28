@@ -44,6 +44,7 @@ class  App extends Component {
                     <Route path="/login" exact component={LoginUser} />
                     <Route path="/user" exact component={User}/>
                     <Route path="/chargement" exact component={Spinner}/>
+                    <Route path="/error" exact component={ErrorPage}/>
 
                     <Route component={ErrorPage} />
               </Switch>
