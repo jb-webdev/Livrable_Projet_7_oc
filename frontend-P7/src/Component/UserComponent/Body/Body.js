@@ -11,6 +11,7 @@ import AvatarUser from './logo192.png';
 // import MessageToMap from "./MessageToMap";
 import "./Body.css";
 import CompoSendmessage from '../CompoMessage/CompoSendmessage';
+import ModifyMessage from '../CompoMessage/ModifyMessage'
 import {Redirect} from'react-router-dom';
 
 export default class Body extends Component {
@@ -18,12 +19,14 @@ export default class Body extends Component {
     state ={  // renseigne toutes les infos utilisateur de la page ici
         redirection: false,
         isAdmin : sessionStorage.getItem("isAdmin"),
-        idUser : sessionStorage.getItem('userId'),   
+        idUser : sessionStorage.getItem('userId'), 
+        token: sessionStorage.getItem('token'),  
         messageDelete  : '',
 
         showMessage : true,
+        showModify : false,
+        
         allMessageApi : [],
-        modifyMessage : false,
     
     }
     
@@ -33,6 +36,21 @@ export default class Body extends Component {
         })
     }
 
+    showModify = (e) => {
+        e.preventDefault();
+        console.log('Le lien a été cliqué.');
+        console.log(">> Target button => " + e.target.name)
+        const targetName = e.target.name;
+        
+        this.setState({
+            messagetoModify : e.target.name,
+            showModify : true,
+            
+        });
+        sessionStorage.setItem("idMessageToModify",targetName)
+        
+        
+    }
     suppMessage = (e) => {
         e.preventDefault();
         console.log('Le lien a été cliqué.');
@@ -86,23 +104,17 @@ export default class Body extends Component {
                 return response.json()
             })
             .then(json => {
-                // console.log(json);
-                
                 this.setState({
                     allMessageApi : json,
                 })
-                // console.log(">>> user API =>" + this.state.allMessageApi[0].title);
-                
-                
             })
             .catch(error => console.log('error', error));
     }
     render() {
-
-        
         return (
             <div className ="container">
             {this.state.redirection ? (<Redirect to="/chargement"/>): (null)}
+            {this.state.showModify ? (<ModifyMessage />) : (null)}
                 <nav>
                      <div className="nav nav-tabs " role="tablist" >
                          <button className="nav-link bg-primary active" type="submit" data-toggle="tab" onClick={this.montrerMessage} >Messagerie</button>
@@ -121,11 +133,12 @@ export default class Body extends Component {
                                         <strong className="d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.username}>@ {allMessages.username}</strong>
                                         <strong className="d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.title}>{allMessages.title}</strong>
                                         <p key={allMessages.idMESSAGE + allMessages.content}>{allMessages.content}</p>
+                                        
                                     </div>
                                     {this.state.isAdmin == 1 || this.state.idUser == allMessages.idAuthor? (
                                         
                                     <div className="modifyBox">
-                                        <button 
+                                        <button onClick={this.showModify}
                                             className="btn btnBox w-10 btn-sm btn-outline-primary btn-block mt-3" 
                                             type="onclick"
                                             name={allMessages.idMESSAGE}

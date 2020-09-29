@@ -39,8 +39,6 @@ export default class LoginUser extends Component {
             email: this.state.email,
             password: this.state.password,               
         }; 
-        console.log(">>> avant requete => " + userLogin.email)
-        console.log(">>> connectStatus => " + this.state.password)
         
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer {{token}}");

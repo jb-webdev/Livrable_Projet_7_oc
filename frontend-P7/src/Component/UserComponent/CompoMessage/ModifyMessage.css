@@ -1,0 +1,9 @@
+.boxButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.btnBoxModify {
+    margin-left: 0;
+    margin-right: 30px;
+}

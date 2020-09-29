@@ -24,7 +24,6 @@ export default class SignupUser extends Component {
             isAdmin: '0',
             items:[]
         }
-        
     }
 
     // on écoute le changement de valeur dans les inputs
@@ -34,7 +33,7 @@ export default class SignupUser extends Component {
             [event.target.name] : event.target.value
         });
         // console.log(this.state.name)
-    } //function onChange
+    } 
       // on ecoute l'evenement du bouton 
     onSubmit = (event) => {
         event.preventDefault();

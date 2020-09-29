@@ -4,8 +4,9 @@
  * Composant pour la section envoie d'un message
  * 
  */
-import React, { Component } from 'react'
-// import {Redirect} from'react-router-dom';
+import React, { Component,useState } from 'react'
+import {Redirect, Link} from'react-router-dom';
+import './ModifyMessage.css';
 
 export default class ModifyMessage extends Component {
     constructor(props){
@@ -13,64 +14,152 @@ export default class ModifyMessage extends Component {
         this.state = {
             title: '',
             content: '',
+            titlePlaceholder : '',
+            contentPlaceholder: '',
 
-            author:'',
-            titlePlaceholder: '',
-            contentPlacholder: '',
+            titleModify: '',
+            contentModify: '',
+
+            redirectPage : false,
         }
     }
+    handleClick = () => {
 
-    onChange = (event) => {
-        this.setState({
-            [event.target.name] : event.target.value
-        });
-        console.log(this.state.title)
     }
-    modifyMessage = (event) => {
-        event.preventDefault();
+    change = e => {
         this.setState({
-            title: this.state.title,
-            content: this.state.content,
-            itemsSendMessage: [...this.state.itemsModifMessage, {title: this.state.title, content: this.state.content}]
-        });
-        console.log(this.state.title);
+            [e.target.id]: e.target.value
+        })
     }
+    submit = e => {
+        e.preventDefault();
+        console.log(this.state.titleModify);
+        console.log(this.state.contentModify);
+        
+        const sendModify = {
+            idUser: sessionStorage.getItem("userId"),
+            isAdmin: sessionStorage.getItem("isAdmin"),
+            idMESSAGES: sessionStorage.getItem("idMessageToModify"),
+            title: this.state.titleModify,
+            content: this.state.contentModify, 
+        } 
+        console.log(sendModify)
+
+        const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: JSON.stringify(sendModify),
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:4200/api/message/modify", requestOptions)
+            .then(response => {
+                console.log(response.status);
+                if (response.status == 200){
+                    this.setState({
+                        redirectPage : true,
+                    })
+                    console.log(">>> response dans la conditon fetch 200 => ok ca marche")
+                }
+
+                return response.json()
+            })
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+
+    componentDidMount() {
+        const idMessage = sessionStorage.getItem("idMessageToModify");
+        console.log(idMessage);
+        const idUser = sessionStorage.getItem("userId");
+        console.log(idUser);
+        const isAdmin = sessionStorage.getItem("isAdmin");
+        console.log(isAdmin);
+        const token = "Bearer " + sessionStorage.getItem("token");
+        console.log(token);
+        const msgToModify = {
+            idMessage: idMessage,
+            idUser: idUser, 
+            isAdmin: isAdmin,             
+        };
+
+        const myHeaders = new Headers();
+            // myHeaders.append("Authorization", token);
+            myHeaders.append("Content-Type", "application/json");
+
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify(msgToModify ),
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:4200/api/message/:message", requestOptions)
+            .then(response => {
+                console.log(response.status)
+
+               return response.json()
+            })
+            .then(json =>{ 
+                console.log(json)
+                this.setState({
+                    titlePlaceholder : json.title,
+                    contentPlaceholder: json.content,
+                })
+            })
+            .catch(error => console.log('error', error));
+    }
+    
+    
     render() {
         return (
             <div>
                 <div>
-                {/* {this.state.redirection ? (<Redirect to="/chargement"/>): (null)} */}
+                {this.state.redirectPage ? (<Redirect to="/chargement"/>): (null)}
                 <div>
-                    <form onSubmit={this.modifyMessage}>
+                    <form onSubmit={this.submit}>
                         <div className="form-group">
-                            <label htmlFor="title">Titre</label>
-                            <input 
+                            <p>Message publier par {this.state.titlePlaceholder}</p>
+                            <label htmlFor="title">Titre à modifier</label>
+                            <input className="form-control"  
                                 type="text" 
-                                className="form-control"  
-                                placeholder="Titre"
-                                name="title"
-                                onChange={this.onChange}
-                                value={this.state.title}
+                                placeholder={this.state.titlePlaceholder}
+                                id="titleModify"
+
+                                onChange={this.change}
+                                value={this.state.titleModify}
                             />
                         </div>
             
                         <div className="form-group">
-                            <label htmlFor="textarea" >Nouveau message</label>
-                            <textarea 
-                                className="form-control" 
+                            <label htmlFor="textarea" >Text à modifier</label>
+                            <textarea className="form-control" 
                                 rows="3"
-                                name="content"
-                                onChange={this.onChange}
-                                value={this.state.content}
-                            >
-
+                                id="contentModify"
+                                placeholder={this.state.contentPlaceholder}
+                                onChange={this.change}
+                                value={this.state.contentModify}
+                            > 
                             </textarea>
                         </div>
+                        <div className='boxButton'>
+                            <button 
+                                className="btn btnBox btnBoxModify w-25 btn-sm btn-outline-success btn-block" 
+                                type="submit" 
+                                > 
+                                Envoyer !
+                            </button>
+                            <div className="btn box">
+                                <Link className="SimpleLink" to="/chargement">Annuler !</Link>
+                            </div>
+                        </div>
+                    
                     </form>
-                    <button 
-                        className="btn btnBox w-25 btn-sm btn-outline-primary btn-block mt-3" type="submit" name="signOut>Delete" onClick={this.envoyerMessage}> 
-                        Envoyer !
-                    </button>
+                    
                 </div>
             </div>
             </div>
