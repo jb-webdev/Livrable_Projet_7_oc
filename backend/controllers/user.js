@@ -104,13 +104,17 @@ exports.login = (req, res, next) => {
                           )
                         });
                     } else {
-                      res.status(401).json({ error: 'Mots de passe incorrect ! ', connect: 'false',});
+                      res.status(401).json({ error: 'Mots de passe incorrect ! '});
                       return;
                     }
                   })
                   .catch(err => res.status(500).json({ error :  'mauvais mot de passe...!'}));
                 });
-              };
+              }else {
+                return res.status(401).json({ message: "l'utilisateur n'existe pas"});
+                      
+
+              }
           });
       }); 
   }; 

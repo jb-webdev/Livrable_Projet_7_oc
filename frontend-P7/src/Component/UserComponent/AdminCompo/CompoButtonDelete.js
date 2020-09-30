@@ -13,25 +13,7 @@ import React, { Component } from 'react'
 export default class CompoButtonDeleteUser extends Component {
     
     
-    // deleteUserApp = () =>{
-    //     const myHeaders = new Headers();
-    //     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-        
-    //     const urlencoded = new URLSearchParams();
-    //     urlencoded.append("idUser", "170");
-    //     urlencoded.append("isAdmin", "1");
-        
-    //     const requestOptions = {
-    //       method: 'DELETE',
-    //       headers: myHeaders,
-    //       body: urlencoded,
-    //       redirect: 'follow'
-    //     };
-        
-    //     fetch("http://localhost:4200/api/user/deleteUser", requestOptions)
-    //       .then(response => response.text())
-    //       .then(result => console.log(result))
-    //       .catch(error => console.log('error', error));
+    
 
     render() {
 

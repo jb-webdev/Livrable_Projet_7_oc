@@ -58,13 +58,12 @@ export default class LoginUser extends Component {
             console.log(response.status);
             
             if (response.status !== 200){
-                // this.props.history.push('/error')
+                this.props.history.push('/error')
                 alert("Connection impossible ! veuillez verifier vos identifiants !")
             }else {
                 this.setState({
                     responseStatus : true,
                 })
-                console.log(">>> reponse dans la conditon fetch 200 => ok ca marche")
             }
             console.log(response.json);
             return response.json();

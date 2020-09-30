@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 29 sep. 2020 à 15:29
+-- Généré le : mer. 30 sep. 2020 à 13:12
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `likes` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idMESSAGE`),
   UNIQUE KEY `idMESSAGES` (`idMESSAGE`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `messages`
@@ -46,8 +46,8 @@ CREATE TABLE IF NOT EXISTS `messages` (
 
 INSERT INTO `messages` (`idMESSAGE`, `idAuthor`, `username`, `title`, `content`, `attachement`, `likes`) VALUES
 (28, 273, 'Giovanni', 'premier message de giovanni', 'bonjour tous le monde je suis l\'administrateur du site !', '', 0),
-(29, 274, 'Sandra', 'premier message de Sandra !', 'Salut tous le monde c\'est mon premier message envoyé depuis l\'application de React !!!!!', '', 0),
-(34, 277, 'Sam', 'modification par sam', 'jkjdeinqcfjien', '', 0);
+(29, 274, 'Sandra', 'modification du titre encore une fois', 'modification du texte aussi', '', 0),
+(37, 303, 'Vincent', 'Bonjour !', 'C\'est mon premier message envoyé de l\'application React !', '', 0);
 
 -- --------------------------------------------------------
 
@@ -65,21 +65,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `isAdmin` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`IdUSERS`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=284 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=306 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`IdUSERS`, `email`, `username`, `password`, `bio`, `isAdmin`) VALUES
-(272, 'samuel@groupe.com', 'Samuel', '$2b$10$OQKPRItFGfjQDC.Cl3gFTOqhej2HFdN2dQmWddqrtz5ZyifQRQAHy', 'service commerciale de Marseille', 0),
 (273, 'giovanni@groupe.com', 'Giovanni', '$2b$10$kj6emylKhfywNw.zu//zPeFQLCXH2Zv6DDGiX0WedTcjv/VKsrmBK', 'Administrateur du site', 1),
 (274, 'sandra@groupe.com', 'Sandra', '$2b$10$J4/4OpO7NTO1jP0j6ARubOc4cmGuBj3bccPWE6FLj8KlSDfTPsQbK', 'Service commerciale de Lyon', 0),
 (277, 'sam@groupe.com', 'Sam', '$2b$10$kQRPDhUGOKJVfEc7ib5Q2OB/77845D/.f2Y2IVHC71fFJl4ig0KkS', 'utilisatrice', 0),
-(278, 'loulou@loulou.com', 'loulou', '$2b$10$.4HnkAZZFQHkzbWq6Ge5LOjoj5YN/1n3CfqEv8QncA/hMmDgPyyrm', 'Service commercilae Toulouse', 0),
-(281, 'essai@connexion.com', 'essai connexion', '$2b$10$GTpuQQsOaXCEaFn38XpqzOHV7zxEEVF/LPPlOD3FteNuOXDX4Ek0S', '', 0),
-(282, 'lulu@lulu.com', 'lulu', '$2b$10$zw.fj/.eCEcFgtL9lziB5O9gOz1ZqrPQ5D5knCoBfEkLuGPWoUEUS', 'njdfiq', 0),
-(283, 'toto@toto.com', 'toto', '$2b$10$y8pnX17rKRBhFEafhoq55u2I4pY4ZoelklkyfCDZpUutb6nrFNebq', '', 0);
+(303, 'vincent@groupe.com', 'Vincent', '$2b$10$JIVi3rmo8t7rTIJcyuZls.3q5pUeC3T9SuClUbf8KbptAc4GNaEBK', 'utilisateur', 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

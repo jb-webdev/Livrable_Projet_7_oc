@@ -8,6 +8,7 @@
  */
 
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom'
 import './ErrorPage.css';
 
 
@@ -15,19 +16,24 @@ import './ErrorPage.css';
 class ErrorPage extends Component  {  
     constructor(props){
         super(props);
-        
-        setTimeout(() =>{
-            this.props.history.push('/')
+        this.state = { // on recupere l'id au clic du boutton
+            redirectionError: false,
+        }
+    } 
+    componentDidMount () {
+        setTimeout(() => {
+        this.setState({
+            redirectionError : true
+        })
         }, 2000);
     }
-    
-    
-    
     render () {
         
+    
+        
         return (
-
             <div className="container">
+            {this.state.redirectionError ? (<Redirect to="/" />) : (null)}
                 <div className="alert alert-danger alert-dismissible fade show my-3" role="alert">
                     <strong style={{color:"red"}}>  Oups!</strong> Vous ne vous êtes pas connecter! veuillez utiliser vos identifiant !.
                     <button type="button" className="close" data-dismiss="alert" aria-label="Close">
