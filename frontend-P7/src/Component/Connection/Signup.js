@@ -44,14 +44,13 @@ export default class SignupUser extends Component {
             password: this.state.password,
             items: [...this.state.items, {username: this.state.username, email: this.state.email, bio: this.state.bio, password: this.state.password}]
         });
-        console.log(this.state.bio)
         // début initialisation de la requête fetch
         
             const email = this.state.email;
             const username = this.state.username;
-            const password = this.state.bio;
+            const password = this.state.password;
             const bio = this.state.bio;
-            const isAdmin = this.state.isAdmin;
+            
         
             const myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -61,7 +60,6 @@ export default class SignupUser extends Component {
                 urlencoded.append("username", username);
                 urlencoded.append("password", password);
                 urlencoded.append("bio", bio);
-                urlencoded.append("isAdmin", isAdmin);
                 
             const requestOptions = {
                 method: 'POST',
@@ -72,10 +70,9 @@ export default class SignupUser extends Component {
             
             fetch("http://localhost:4200/api/user/signup", requestOptions)
             .then(response => {
-                if (response.status === 200){
+                if (response.status == 200){
                     this.props.history.push('/chargement')
                 }
-                console.log(response.status);
                 return response.json();
             })
             .then(json => {

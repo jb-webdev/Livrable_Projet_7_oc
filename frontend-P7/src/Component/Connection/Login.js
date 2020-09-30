@@ -17,7 +17,8 @@ export default class LoginUser extends Component {
             connectStatus : 1,
             email: '',
             password: '',
-            items: []
+            items: [],
+            responseStatus: false,
         }   
     }
     
@@ -39,9 +40,9 @@ export default class LoginUser extends Component {
             email: this.state.email,
             password: this.state.password,               
         }; 
-        
+        console.log(userLogin);
         const myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer {{token}}");
+        
         myHeaders.append("Content-Type", "application/json");
         
         const requestOptions = {
@@ -56,13 +57,14 @@ export default class LoginUser extends Component {
         .then(response => {
             console.log(response.status);
             
-            if (response.status === 200){
-                this.props.history.push('/chargement')
-                console.log(">>> response dans la conditon fetch 200 => ok ca marche")
-            }
             if (response.status !== 200){
                 // this.props.history.push('/error')
                 alert("Connection impossible ! veuillez verifier vos identifiants !")
+            }else {
+                this.setState({
+                    responseStatus : true,
+                })
+                console.log(">>> reponse dans la conditon fetch 200 => ok ca marche")
             }
             console.log(response.json);
             return response.json();
@@ -77,6 +79,9 @@ export default class LoginUser extends Component {
                 sessionStorage.setItem("email", json.email);
                 sessionStorage.setItem("bio", json.bio);
                 sessionStorage.setItem("token", json.token);
+            }
+            if (this.state.responseStatus === true){
+                this.props.history.push('/chargement')
             }
         })
         .catch(error => console.log('error', error));

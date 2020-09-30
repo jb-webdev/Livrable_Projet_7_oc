@@ -14,17 +14,13 @@ export default class ModifyMessage extends Component {
         this.state = {
             title: '',
             content: '',
+            username : sessionStorage.getItem('username'),
             titlePlaceholder : '',
             contentPlaceholder: '',
-
             titleModify: '',
             contentModify: '',
-
             redirectPage : false,
         }
-    }
-    handleClick = () => {
-
     }
     change = e => {
         this.setState({
@@ -42,12 +38,9 @@ export default class ModifyMessage extends Component {
             idMESSAGES: sessionStorage.getItem("idMessageToModify"),
             title: this.state.titleModify,
             content: this.state.contentModify, 
-        } 
-        console.log(sendModify)
-
+        }
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
-
         const requestOptions = {
             method: 'PUT',
             headers: myHeaders,
@@ -64,7 +57,6 @@ export default class ModifyMessage extends Component {
                     })
                     console.log(">>> response dans la conditon fetch 200 => ok ca marche")
                 }
-
                 return response.json()
             })
             .then(result => console.log(result))
@@ -73,13 +65,9 @@ export default class ModifyMessage extends Component {
 
     componentDidMount() {
         const idMessage = sessionStorage.getItem("idMessageToModify");
-        console.log(idMessage);
         const idUser = sessionStorage.getItem("userId");
-        console.log(idUser);
         const isAdmin = sessionStorage.getItem("isAdmin");
-        console.log(isAdmin);
         const token = "Bearer " + sessionStorage.getItem("token");
-        console.log(token);
         const msgToModify = {
             idMessage: idMessage,
             idUser: idUser, 
@@ -89,8 +77,6 @@ export default class ModifyMessage extends Component {
         const myHeaders = new Headers();
             // myHeaders.append("Authorization", token);
             myHeaders.append("Content-Type", "application/json");
-
-
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
@@ -101,7 +87,6 @@ export default class ModifyMessage extends Component {
         fetch("http://localhost:4200/api/message/:message", requestOptions)
             .then(response => {
                 console.log(response.status)
-
                return response.json()
             })
             .then(json =>{ 
@@ -113,17 +98,16 @@ export default class ModifyMessage extends Component {
             })
             .catch(error => console.log('error', error));
     }
-    
-    
+ 
     render() {
         return (
             <div>
-                <div>
-                {this.state.redirectPage ? (<Redirect to="/chargement"/>): (null)}
+                <div >
+                {this.state.redirectPage ? (<Redirect to="/chargement"/>) : (null)}
                 <div>
                     <form onSubmit={this.submit}>
-                        <div className="form-group">
-                            <p>Message publier par {this.state.titlePlaceholder}</p>
+                        <div className="form-group mt-5">
+                            <p>Message à modifier</p>
                             <label htmlFor="title">Titre à modifier</label>
                             <input className="form-control"  
                                 type="text" 
@@ -157,9 +141,7 @@ export default class ModifyMessage extends Component {
                                 <Link className="SimpleLink" to="/chargement">Annuler !</Link>
                             </div>
                         </div>
-                    
-                    </form>
-                    
+                    </form> 
                 </div>
             </div>
             </div>
