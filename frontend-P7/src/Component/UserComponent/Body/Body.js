@@ -25,6 +25,7 @@ export default class Body extends Component {
         showMessage : true,
         showModify : false,
         allMessageApi : [],
+        token : sessionStorage.getItem('token'),
     }
     
     montrerMessage = () => {
@@ -51,11 +52,12 @@ export default class Body extends Component {
         const idMessageDelete = e.target.name;
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            myHeaders.append("Authorization", "Bearer " + this.state.token);
 
         const urlencoded = new URLSearchParams();
             urlencoded.append("idUser", this.state.idUser);
             urlencoded.append("isAdmin", this.state.isAdmin);
-            urlencoded.append("idMESSAGE", idMessageDelete);
+            urlencoded.append("IdMESSAGE", idMessageDelete);
 
         const requestOptions = {
             method: 'DELETE',
@@ -80,8 +82,12 @@ export default class Body extends Component {
         }
     // REQUETE FETCH POUR RECUPERER TOUS LES MESSAGES
     componentDidMount(){
+        const myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer " + this.state.token);
+
         const requestOptions = {
             method: 'GET',
+            headers: myHeaders,
             redirect: 'follow'
           };
           

@@ -20,6 +20,7 @@ export default class ModifyMessage extends Component {
             titleModify: '',
             contentModify: '',
             redirectPage : false,
+            token : sessionStorage.getItem('token')
         }
     }
     change = e => {
@@ -41,13 +42,15 @@ export default class ModifyMessage extends Component {
         }
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Bearer " + this.state.token);
+
         const requestOptions = {
             method: 'PUT',
             headers: myHeaders,
             body: JSON.stringify(sendModify),
             redirect: 'follow'
         };
-
+        // requete pour modifier le message
         fetch("http://localhost:4200/api/message/modify", requestOptions)
             .then(response => {
                 console.log(response.status);
@@ -67,16 +70,17 @@ export default class ModifyMessage extends Component {
         const idMessage = sessionStorage.getItem("idMessageToModify");
         const idUser = sessionStorage.getItem("userId");
         const isAdmin = sessionStorage.getItem("isAdmin");
-        const token = "Bearer " + sessionStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const msgToModify = {
             idMessage: idMessage,
             idUser: idUser, 
-            isAdmin: isAdmin,             
-        };
+            isAdmin: isAdmin, 
+        };           
 
         const myHeaders = new Headers();
-            // myHeaders.append("Authorization", token);
             myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Bearer " + this.state.token);
+            
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
@@ -84,9 +88,8 @@ export default class ModifyMessage extends Component {
             redirect: 'follow'
         };
 
-        fetch("http://localhost:4200/api/message/:message", requestOptions)
+        fetch("http://localhost:4200/api/message/:", requestOptions)
             .then(response => {
-                console.log(response.status)
                return response.json()
             })
             .then(json =>{ 
@@ -113,7 +116,7 @@ export default class ModifyMessage extends Component {
                                 type="text" 
                                 placeholder={this.state.titlePlaceholder}
                                 id="titleModify"
-
+                                
                                 onChange={this.change}
                                 value={this.state.titleModify}
                             />
@@ -124,10 +127,11 @@ export default class ModifyMessage extends Component {
                             <textarea className="form-control" 
                                 rows="3"
                                 id="contentModify"
-                                placeholder={this.state.contentPlaceholder}
+                                // placeholder={this.state.contentPlaceholder}
                                 onChange={this.change}
                                 value={this.state.contentModify}
                             > 
+                            {this.state.contentPlaceholder}
                             </textarea>
                         </div>
                         <div className='boxButton'>

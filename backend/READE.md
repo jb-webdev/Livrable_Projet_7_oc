@@ -8,23 +8,24 @@
 ## ###################################################
 
 USER
-        post     =/api/user/signup      => Pour la création d'un utilisateur
-        get      =/api/user/login       => pour recupere les infos de connection
-        put      =/api/user/            => Pour modifier la bio de l'utilisateur
-        get      =/api/user/all         => pour recuperer tous les utilisateurs 
+        post    => /api/user/signup      => Pour la création d'un utilisateur
+        get     => /api/user/login       => Pour recupere les infos de connection
+        put     => /api/user/            => Pour modifier la bio de l'utilisateur
+        get     => /api/user/all         => Pour recuperer tous les utilisateurs 
          
         PARTIE ADMIN        
-        get      =/api/user/admin       => Pour supprimer un utilisateur  // UNIQUEMENT ADMIN
+        get     => /api/user/admin       => Pour supprimer un utilisateur  // UNIQUEMENT ADMIN
 
 MESSAGE
         post    =>   /api/message/              => Pour la création de message    
-        get     =>   /api/message/              => pour recuperer tous les messages
+        get     =>   /api/message/all           => pour recuperer tous les messages
         get     =>   /api/message/author        => pour recuperer tous les message de l'utilisateur 
 
-        PARTIE ADMIN ET UTILISATEUR
-        delete  =>   /api/message/:             => pour supprimer un message // UNIQUEMENT ADMIN ET L'UTILISATEUR
-##       get      =>   /api/message/:id      => pour recupere un message
+        PARTIE ADMIN
+        delete  =>   /api/message/delete        => pour supprimer un message // UNIQUEMENT ADMIN ET L'UTILISATEUR
+        get     =>   /api/message/:             => pour recupere un message
         put     =>   /api/message/modify        => pour modifier un message // UNIQUEMENT ADMIN ET L'UTILISATEUR
+
 
 ## ################################################### 
                 INSTALATION
@@ -43,7 +44,6 @@ npm install --save mysql2
 npm install --save body-parser  /  const bodyParser = require('body-parser');
 npm install --save bcrypt
 npm install --save jsonwebtoken
-npm install --save multer
 
 
 

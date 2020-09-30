@@ -20,6 +20,7 @@ export default class CompoSendmessage extends Component {
         attachement:'',
         likes: '',
         itemsSendMessage : [],
+        token : sessionStorage.getItem("token"),
     }
 }
 
@@ -47,6 +48,7 @@ export default class CompoSendmessage extends Component {
         
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            myHeaders.append("Authorization", "Bearer " + this.state.token);
 
         const urlencoded = new URLSearchParams();
             urlencoded.append("title", this.state.title);

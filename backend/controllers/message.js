@@ -119,23 +119,23 @@ exports.getOneMessage = (req, res, next) => {
 exports.deleteMessage = (req, res, next) => {
     const author = req.body.idUser;
     const isAdmin = req.body.isAdmin;
-    const idMessage = req.body.IdMESSAGE;
-    console.log(">>> auteur => " + author);
-    console.log(">>> isAdmin => " + isAdmin);
-    console.log(">>> idMessage => " + idMessage);
+    const IdMESSAGE = req.body.IdMESSAGE;
+    console.log(">>> idMESSAGE => " + IdMESSAGE);
 
-    const IdMessagePrepare = [idMessage];
-    console.log(">>> message preparer => " + IdMessagePrepare)
-
+    const IdMessagePrepare = [IdMESSAGE];
     const sql2 = `Select * FROM messages WHERE idMESSAGE = ?;`
-    connection.connect(function(err) {
-        connection.query(sql2, [IdMessagePrepare],function(err, result){
+
+    connection.connect(function(err, result) {
+        connection.query(sql2, [IdMessagePrepare], function(err, result){
+            console.log('>>> ok on a le retour' + result[0].idAuthor)
+          
           if ( result[0].idAuthor == author || req.body.isAdmin == 1 ) {
-            console.log('on peut supprimer');
+            console.log('3 >>> on peut supprimer');
             connection.connect(function(err) {
+              console.log("4 >>> on rentre dans le deuxième connect ... !");
               const sql = `DELETE FROM messages Where idMESSAGE = ?;`;
               connection.query(sql, [IdMessagePrepare], function (err, result) {
-              console.log("Le message 1 est supprimer .....!");
+              console.log("5 >>> Le message 1 est supprimer .....!");
               });
               res.status(201).json({message: 'suppression du message réalisé.......!'});
             });
