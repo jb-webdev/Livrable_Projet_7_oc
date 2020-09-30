@@ -156,9 +156,11 @@ exports.modifyMessage = (req, res, next) => {
   const contentToModify = req.body.content;
   
   const prepSql1 = [idMessage];
+  const prepSql2Title = [titleToModify];
+  const prepSql2Content = [contentToModify];
   
   const sql1 = `Select * FROM messages WHERE idMESSAGE = ?;`;
-  const sql2 = `UPDATE messages SET title ='${titleToModify}', content ='${contentToModify}' WHERE idMESSAGE=?;`;
+  const sql2 = `UPDATE messages SET title =?, content =? WHERE idMESSAGE=?;`;
 
   connection.connect(function(err) {
     connection.query(sql1, [prepSql1], function(err, result){
@@ -167,7 +169,7 @@ exports.modifyMessage = (req, res, next) => {
       
       if ( result[0].idAuthor == idAuthor || isAdmin == 1 ) {
         console.log('on rentre pour envoyer')
-        connection.query(sql2, [prepSql1], function (err, result) {
+        connection.query(sql2, [[prepSql2Title], [prepSql2Content], [prepSql1]], function (err, result) {
           if (result) {
             return res.status(200).json({
               message: 'contenue du message modifié  !'

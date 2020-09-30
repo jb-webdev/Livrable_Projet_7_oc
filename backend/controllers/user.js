@@ -128,7 +128,8 @@ exports.modifyBio = (req, res, next) =>{
   }else {
     connection.connect(function(err) {
       const userExist = [idUser];
-      const sql2 = `UPDATE users SET bio='${bio}' WHERE idUSERS=?;`;
+      const bioModify = [bio];
+      const sql2 = `UPDATE users SET bio=? WHERE idUSERS=?;`;
       const sql1 = `SELECT EXISTS( SELECT * FROM users WHERE idUSERS=? ) AS users_exists;`;
 
       connection.query(sql1, [userExist], function (err, result) {
@@ -136,11 +137,11 @@ exports.modifyBio = (req, res, next) =>{
         if (result[0].users_exists){
           // if (isAdmin === 1 || idUser === result.)
           console.log( "ok voir resultat => ")
-          connection.query(sql2, [userExist], function (err, result){
+          connection.query(sql2, [[bioModify], [userExist]], function (err, result){
           })
           return res.status(200).json({message :'biographie modifié !'})
         } else {
-          return res.status(401).json({ error: "l'utilisateur n'existe pas !"});
+          return res.status(400).json({ 'error': "l'utilisateur n'existe pas ! ..."});
         }
       });
     }); 
@@ -197,44 +198,39 @@ exports.deleteOneUser = (req, res, next) =>{
     }
 }; 
 
+exports.modifyStatus = (req, res, next) =>{
+  const isAdmin = req.body.isAdmin;
+  const idUser = req.body.idUser;
+  const statusChange = req.body.status;
 
+  if (isAdmin != 1){
+    return res.status(401).json({ error: "vous n'avez pas l'authorisation necessaire !"});
+  } else {
+    const sql1 = `SELECT EXISTS( SELECT * FROM users WHERE idUSERS=? ) AS users_exists;`;
+    const sql2 = `UPDATE users SET isAdmin=? WHERE IdUSERS=?;`;
 
-//SAUVEGARDE SIGNUP
-// exports.signup = (req, res, next) => { 
-//   bcrypt.hash(req.body.password, 10)
-//     .then(hash =>{ 
-//       const email     = req.body.email;
-//       const username  = req.body.username;
-//       const password  = hash;
-//       const bio       = req.body.bio;
-//       const isAdmin   = req.body.isAdmin;
-//       if (email == null || username == null || password == null) {
-//         return res.status(400).json({ 'error': 'il manque des paramètres ! ...'});
-//       }else {
-//         const valuesUsers = [email, username, password, bio, isAdmin,];
-//         connection.connect(function(err) {
-//             console.log("Connected!");
-//             const sql = `INSERT INTO users VALUES (NULL, ?)`;
-//             connection.query(sql, [valuesUsers], function (err, result) {
-//               if (result){
-//                 console.log('User enregistré ...!')
-//                 const sendJson= ({userId: username, adresseMail: email, password: password, bio: bio, isadmin:isAdmin,})
-//                 // res.status(200).send(JSON.stringify(sendJson));
-//                 res.status(200).json({
-//                   userId: username,
-//                   adresseMail: email,
-//                   password: password,
-//                   bio: bio,
-//                   isadmin:isAdmin,
-//                 });
+    const researchUser = [idUser];
+    const modifyStatus = [statusChange];
 
-//               } else {
-//                 res.status(500).json({message: "Oups..! Impossible de vous enregistrer !"});
-//               }
-//             });
-//         });   
-//       };
-//     })
-//     .catch(error => res.status(500).json({message: "erreur de connexion premier niveau !"})); // on renvoie une erreur
-      
-// };
+    connection.connect(function(err, result) {
+      connection.query(sql1, [researchUser], function(err, result){
+        console.log("juste avant de traiter le if-else => " + result[0].IdUSERS);
+        console.log("idUser => " + idUser);
+        if ( result[0].IdUSERS == idUser || isAdmin == 1 ) {
+          console.log('on rentre pour envoyer')
+          connection.query(sql2, [[statusChange], [researchUser]], function (err, result) {
+            if (result) {
+              return res.status(200).json({
+                message: 'status modifié  !'
+              });
+            } else {
+              return res.status(403).json({message: "Vous n'êtes pas autorisé à modifier ce status !"});
+            }
+          });       
+        } else {
+          return res.status(403).json({message: "Vous n'avez pas l'authorisation de modifié le status !"});
+        }
+      });
+    });
+  };
+};

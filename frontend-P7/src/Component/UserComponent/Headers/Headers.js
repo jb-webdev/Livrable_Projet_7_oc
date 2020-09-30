@@ -19,20 +19,8 @@ export default class Headers extends Component {
         username: sessionStorage.getItem("username"),
         bio: sessionStorage.getItem("bio"),
         email: sessionStorage.getItem("email"),
-        dateInscription: '17 septembre 2020',
     }
-    
-    // handleClick (e) {
-    //     e.preventDefault();
-    //     sessionStorage.clear(); 
-    // }
 
-    // isAdminRec = () => {
-    //     console.log( this.state.isAdmin)
-    //     // this.setState({
-    //     //     isAdmin : sessionStorage.getItem(sessionStorage.getItem("isAdmin"))
-    //     // });
-    // }
     render() {
         // console.log( "dans le setset" + sessionStorage.getItem("isAdmin"));
         return (

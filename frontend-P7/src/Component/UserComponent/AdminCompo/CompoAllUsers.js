@@ -18,6 +18,7 @@ export default class CompoAllUser extends Component {
             userAdmin : sessionStorage.getItem("isAdmin"),
             userIdDelete : '',
             usersApi : [],
+            token: sessionStorage.getItem('token'),
         }
 } 
 
@@ -34,6 +35,7 @@ export default class CompoAllUser extends Component {
  
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            myHeaders.append("Authorization", "Bearer " + this.state.token);
 
         const urlencoded = new URLSearchParams();
             urlencoded.append("idUser", targetName);
@@ -67,8 +69,12 @@ export default class CompoAllUser extends Component {
 
 // REQUETE FETCH POUR RECUPERER TOUS LES USERS
         componentWillMount(){
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer " + this.state.token);
+
             const requestOptions = {
                 method: 'GET',
+                headers: myHeaders,
                 redirect: 'follow'
               };
               

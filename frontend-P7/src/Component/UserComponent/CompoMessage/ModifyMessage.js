@@ -116,7 +116,6 @@ export default class ModifyMessage extends Component {
                                 type="text" 
                                 placeholder={this.state.titlePlaceholder}
                                 id="titleModify"
-                                
                                 onChange={this.change}
                                 value={this.state.titleModify}
                             />
