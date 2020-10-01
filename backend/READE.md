@@ -31,9 +31,8 @@ MESSAGE
                 INSTALATION
 ## ###################################################
 npm init 
-git init
 ## ################################################### 
-        INSTALATION DES DEPENDENCES 
+                 DEPENDENCES 
 ## ###################################################
 npm install --save express
 npm install -g nodemon
