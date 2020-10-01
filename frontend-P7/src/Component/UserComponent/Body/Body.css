@@ -12,3 +12,20 @@
 .modifyBox {
     display: flex;
 }
+@media all and (max-width: 768px){
+    .modifyBox{
+        flex-direction: column;
+    }
+    .titleMessage {
+        text-align: left;
+    }
+    .contentMessage{
+        text-align: left;
+    }
+}
+@media all and (max-width: 575px){
+    .modifyBox{
+        flex-direction: row;
+    }
+
+}

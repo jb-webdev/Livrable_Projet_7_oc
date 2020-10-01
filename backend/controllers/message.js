@@ -86,35 +86,39 @@ exports.modifyMessage = (req, res, next) => {
   const idMessage = req.body.idMESSAGES;
   const titleToModify = req.body.title;
   const contentToModify = req.body.content;
-  
-  const prepSql1 = [idMessage];
-  const prepSql2Title = [titleToModify];
-  const prepSql2Content = [contentToModify];
-  
-  const sql1 = `Select * FROM messages WHERE idMESSAGE = ?;`;
-  const sql2 = `UPDATE messages SET title =?, content =? WHERE idMESSAGE=?;`;
 
-  connection.connect(function(err) {
-    connection.query(sql1, [prepSql1], function(err, result){
-      console.log("juste avant de traiter le if-else => " + result[0].idAuthor);
-      console.log("auteur => " + idAuthor);
-      
-      if ( result[0].idAuthor == idAuthor || isAdmin == 1 ) {
-        console.log('on rentre pour envoyer')
-        connection.query(sql2, [[prepSql2Title], [prepSql2Content], [prepSql1]], function (err, result) {
-          if (result) {
-            return res.status(200).json({
-              message: 'contenue du message modifié  !'
-            });
-          } else {
-            return res.status(500).json({message: "Oups une erreur avec notre server !"});
-          }
-        });       
-      } else {
-        return res.status(403).json({message: "Vous n'avez pas l'authorisation de modifié le message !"});
-      } 
-    });        
-  });
+  if (titleToModify == null || contentToModify == null || idMessage == null ) {
+    return res.status(400).json({ 'error': 'il manque des paramètres ! renseigner tous les champs ...'})
+  }else {
+    const prepSql1 = [idMessage];
+    const prepSql2Title = [titleToModify];
+    const prepSql2Content = [contentToModify];
+    
+    const sql1 = `Select * FROM messages WHERE idMESSAGE = ?;`;
+    const sql2 = `UPDATE messages SET title =?, content =? WHERE idMESSAGE=?;`;
+
+    connection.connect(function(err) {
+      connection.query(sql1, [prepSql1], function(err, result){
+        console.log("juste avant de traiter le if-else => " + result[0].idAuthor);
+        console.log("auteur => " + idAuthor);
+        
+        if ( result[0].idAuthor == idAuthor || isAdmin == 1 ) {
+          console.log('on rentre pour envoyer')
+          connection.query(sql2, [[prepSql2Title], [prepSql2Content], [prepSql1]], function (err, result) {
+            if (result) {
+              return res.status(200).json({
+                message: 'contenue du message modifié  !'
+              });
+            } else {
+              return res.status(500).json({message: "Oups une erreur avec notre server !"});
+            }
+          });       
+        } else {
+          return res.status(403).json({message: "Vous n'avez pas l'authorisation de modifié le message !"});
+        } 
+      });        
+    });
+  } 
 };
 
 exports.getOneMessage = (req, res, next) => {

@@ -115,17 +115,17 @@ export default class Body extends Component {
                      {this.state.showMessage ?(
                         <div>
                             {this.state.allMessageApi.map((allMessages) => 
-                                <div className="media test-muted pt-3" label={allMessages.idMESSAGE} key={allMessages.idMESSAGE + allMessages.idAuthor} name={allMessages.idAuthor}>
+                                <div className=" row media test-muted pt-3" label={allMessages.idMESSAGE} key={allMessages.idMESSAGE + allMessages.idAuthor} name={allMessages.idAuthor}>
                                     <img className="mr-3" src={AvatarUser} alt="avatar user" width="32" height="32"/>
-                                    <div className="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
+                                    <div className="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray col-sm-9">
                                         <strong className="d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.username}name={allMessages.username}>@ {allMessages.username}</strong>
-                                        <strong className="d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.title}>{allMessages.title}</strong>
-                                        <p key={allMessages.idMESSAGE + allMessages.content}>{allMessages.content}</p>
+                                        <strong className="titleMessage d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.title}>{allMessages.title}</strong>
+                                        <p className="contentMessage" key={allMessages.idMESSAGE + allMessages.content}>{allMessages.content}</p>
                                         
                                     </div>
                                     {this.state.isAdmin === "1" || this.state.idUser === allMessages.idAuthor? (
                                         
-                                    <div className="modifyBox">
+                                    <div className="modifyBox col-sm-3">
                                         <button onClick={this.showModify}
                                             className="btn btnBox w-10 btn-sm btn-outline-primary btn-block mt-3" 
                                             type="onclick"

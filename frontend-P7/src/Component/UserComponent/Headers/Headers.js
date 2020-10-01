@@ -6,11 +6,11 @@
  */
 
 import React, { Component } from 'react';
-// import {BrowserRouter as Router, Route, Switch,Redirect} from'react-router-dom';
 import {Link} from 'react-router-dom';
 import AvatarUser from './logo192.png';
 import {CompoUsername, CompoBIo} from './CompoHeaders';
 import CompoStatusCompte from './CompoStatusCompte';
+import './Header.css';
 
 export default class Headers extends Component {
     state = {
@@ -24,13 +24,16 @@ export default class Headers extends Component {
     render() {
         // console.log( "dans le setset" + sessionStorage.getItem("isAdmin"));
         return (
-            <div className="d-flex align-items-center p-3 my-3 text-50 rounded shadow-sm"  style={{backgroundColor: "#d8d8d8", border:"2px solid #d1515a"}}>
-                <img className="mr-3" src={AvatarUser} alt="avatar user" width="48" height="48"/>
-                <div className=" 1h-100">
-                    <CompoUsername label={this.state.username}/>
-                    <CompoBIo label= {this.state.bio} />
-                    {this.state.isAdmin === "1" ? <CompoStatusCompte /> : <p></p> }
+            <div className=" row d-flex align-items-center p-3 my-3 text-50 rounded shadow-sm"  style={{backgroundColor: "#d8d8d8", border:"2px solid #d1515a"}}>
+                <div className=" boxHeader col-md-9">
+                    <img className=" image mr-3" src={AvatarUser} alt="avatar user" width="48" height="48"/>
+                    <div className=" 1h-100">
+                        <CompoUsername label={this.state.username}/>
+                        <CompoBIo label= {this.state.bio} />
+                        {this.state.isAdmin === "1" ? <CompoStatusCompte /> : <p></p> }
+                    </div>
                 </div>
+                <div className="col-md-3 ">
                 <Link 
                     className="btn btnBox  btn-sm btn-outline-danger btn-block mt-3 " 
                     style={{width: '100px', marginRight: '30px'}} 
@@ -39,6 +42,7 @@ export default class Headers extends Component {
                     name="accueil"
                     onClick={() => {sessionStorage.clear()}}
                     >sign out !</Link> 
+                </div>
             </div>
         )
     }

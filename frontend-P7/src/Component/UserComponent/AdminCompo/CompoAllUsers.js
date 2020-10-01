@@ -8,6 +8,7 @@ import React, { Component } from 'react'
 import AvatarUser from './logo192.png';
 import CompoStatusUser from './CompoStatusUser';
 import {Redirect} from'react-router-dom';
+import './CompoStatusUser.css';
 
 export default class CompoAllUser extends Component {
     constructor(props){
@@ -92,22 +93,24 @@ export default class CompoAllUser extends Component {
             <div>
                 {this.state.redirection ? (<Redirect to="/chargement"/>): (null)}
                 {this.state.usersApi.map((allUsers) => 
-                    <div className="media test-muted pt-3" key={allUsers.IdUSERS} name={allUsers.IdUSERS}>
-                        <img className="mr-3" src={AvatarUser} alt="avatar user" width="32" height="32"/>
-                        <div className="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                            <strong className="d-block text-gray-dark" key={allUsers.IdUSERS + allUsers.username} >{allUsers.username}</strong>
-                            <strong className="d-block text-gray-dark" key={allUsers.IdUSERS + allUsers.email} >{allUsers.email} </strong>
-                            <p key={allUsers.IdUSERS + allUsers.bio}>{allUsers.bio}</p>
+                    <div className="media test-muted pt-3 row" key={allUsers.IdUSERS} name={allUsers.IdUSERS}>
+                        <img className="mr-3 blockImg" src={AvatarUser} alt="avatar user" width="32" height="32"/>
+                        <div className="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray  col-xs-12 col-sm-8">
+                            <strong className="d-block text-gray-dark" key={allUsers.IdUSERS + allUsers.username} >@ {allUsers.username}</strong>
+                            <strong className="d-block text-gray-dark blockTitle" key={allUsers.IdUSERS + allUsers.email} >{allUsers.email} </strong>
+                            <p className="blockBio" key={allUsers.IdUSERS + allUsers.bio}>{allUsers.bio}</p>
                         </div>
-                        <CompoStatusUser  isAdmin={allUsers.isAdmin} idUser={allUsers.IdUSERS} token={this.state.token} />
-                        <div>
-                            <button onClick={this.onClick} 
-                                className="btn btnBox w-10 btn-sm btn-outline-danger btn-block mt-3" 
-                                type="onClick"
-                                name= {allUsers.IdUSERS}  
-                            >
-                                Delete
-                            </button>
+                        <div className="boxAllUser col-xs-12 col-sm-4">
+                            <CompoStatusUser  isAdmin={allUsers.isAdmin} idUser={allUsers.IdUSERS} token={this.state.token} />
+                            <div>
+                                <button onClick={this.onClick} 
+                                    className="btn btnAllDel w-10 btn-sm btn-outline-danger btn-block " 
+                                    type="onClick"
+                                    name= {allUsers.IdUSERS}  
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div> 
                 )} 

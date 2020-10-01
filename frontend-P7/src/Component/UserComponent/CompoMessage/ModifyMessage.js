@@ -58,7 +58,6 @@ export default class ModifyMessage extends Component {
                     this.setState({
                         redirectPage : true,
                     })
-                    console.log(">>> response dans la conditon fetch 200 => ok ca marche")
                 }
                 return response.json()
             })

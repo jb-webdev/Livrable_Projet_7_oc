@@ -1,4 +1,54 @@
-.boxStatus{
+/* .boxStatus{
     margin-right: 50px;
+} */
+
+.boxAllUser {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
 }
+.btnAll {
+   min-width: 100px;
+   margin: 0;
+}
+.btnAllDel {
+    width: 100px;
+    margin: 0;
+}
+@media all and (max-width: 768px){
+    .boxAllUser {
+        flex-direction: column;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .btnAll {
+        margin-bottom: 5px;
+     }
+     .blockImg {
+         margin-left: 10px;
+     }
+     .blockBio{
+        text-align: left;
+     }
+  }
+  @media all and (max-width: 576px){
+    .boxAllUser {
+        flex-direction: row;
+    }
+    .btnAll {
+        min-width: 150px;
+     }
+    .btnAllDel {
+        min-width: 150px;
+     }
+     .blockTitle{
+         text-align: left;
+     }
+     .blockBio{
+        text-align: left;
+     }
+    
+  }
+ 
 

@@ -62,7 +62,7 @@ export default class CompoStatusUser extends Component {
             <div className="boxStatus" >
             {this.state.redirectPage ? (<Redirect to="/chargement"/>) : (null)}
                 {this.state.curentStatus !== 0 ? (
-                    <button className="btn btnBox w-10 btn-sm btn-outline-primary btn-block mt-3"  
+                    <button className="btn btnBox btnAll w-10 btn-sm btn-outline-primary btn-block"  
                         type="onClick" 
                         name= "0"
                         
@@ -71,7 +71,7 @@ export default class CompoStatusUser extends Component {
                             Admin
                     </button>
                 ) : (
-                    <button className="btn btnBox w-10 btn-sm btn-outline-success btn-block mt-3"  
+                    <button className="btn btnBox btnAll w-10 btn-sm btn-outline-success btn-block"  
                         type="onClick" 
                         name= "1"
                         

@@ -1,0 +1,8 @@
+@media all and (max-width: 768px){
+    h4, h6, p  {
+      text-align: center;
+    }
+    .titleMessage {
+      text-align: center;
+    }
+  }

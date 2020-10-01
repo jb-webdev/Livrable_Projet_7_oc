@@ -60,7 +60,7 @@ exports.login = (req, res, next) => {
   const logEmail = req.body.email;
   const logPassword = req.body.password;
   // je controle que le formulaire ne soit pas vide
-  if (logEmail === null || logPassword === null) {
+  if (logEmail == null || logPassword == null) {
     return res.status(400).json({ 'error': 'il manque des paramètres ! ...'})
   } else {
     const sqlPrepare = [logEmail];
