@@ -24,7 +24,6 @@ export default class Body extends Component {
         showMessage : true,
         showModify : false,
         allMessageApi : [],
-        token : sessionStorage.getItem('token'),
     }
     
     montrerMessage = () => {
@@ -44,7 +43,6 @@ export default class Body extends Component {
     }
     suppMessage = e => {
         e.preventDefault();
-        const targetName = e.target.name;
         this.setState({
             messageDelete : e.target.name,
         });
@@ -125,7 +123,7 @@ export default class Body extends Component {
                                         <p key={allMessages.idMESSAGE + allMessages.content}>{allMessages.content}</p>
                                         
                                     </div>
-                                    {this.state.isAdmin == 1 || this.state.idUser == allMessages.idAuthor? (
+                                    {this.state.isAdmin === "1" || this.state.idUser === allMessages.idAuthor? (
                                         
                                     <div className="modifyBox">
                                         <button onClick={this.showModify}

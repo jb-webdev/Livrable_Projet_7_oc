@@ -66,7 +66,7 @@ export default class SignupUser extends Component {
             
             fetch("http://localhost:4200/api/user/signup", requestOptions)
             .then(response => {
-                if (response.status == 200){
+                if (response.status === 200){
                     this.props.history.push('/chargement')
                 }
                 return response.json();

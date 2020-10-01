@@ -14,13 +14,12 @@ exports.createMessage = (req, res, next) => {
   const likes             =  0;
 
   if (title == null || content == null) {
-      return res.status(400).json({ 'error': 'il manque des paramètres ! ...'})
+      return res.status(403).json({ 'error': 'il manque des paramètres ! ...'})
     } else {
           //je recupere toutes les valeurs et je prépare avant l'enregistrement dans la BD
           const valuesCreate = [idAuthor, username, title, content, attachement, likes];
           // j'enregistre dans la base de donnée.
           connection.connect(function(err) {
-            console.log("Connected!");
               const sql = `INSERT INTO messages VALUES (NULL, ?);`;
               connection.query(sql, [valuesCreate], function (err, result) {
                 if (result) {
@@ -31,26 +30,22 @@ exports.createMessage = (req, res, next) => {
                     author: idAuthor,
                     message: 'Message enregistré.......!'
                   });
-                  console.log("1 message viens de s'enregistré .....!");
                 }else{
                   return res.status(500).json({message: "Problème de connexion BD"})
-                }  // else
-              }); // query sql
-          }); // connect
+                }
+              });
+          }); 
       }
 };
-// voir comment recuperer les donnée mysql  // ok
-exports.getAllMessage = (req, res, next) => {
-    
+
+exports.getAllMessage = (req, res, next) => { 
   connection.connect(function(err) {
-    console.log("Connected!");
     const sql = `SELECT * FROM messages`;
     connection.query(sql, function (err, result) {
       if (result){
         const results = JSON.parse(JSON.stringify(result));
-              const stringJson =JSON.stringify(results);
-              const json =  JSON.parse(stringJson);
-              console.log('>> username: ', json);
+        const stringJson =JSON.stringify(results);
+        const json =  JSON.parse(stringJson);
         res.status(200).json(json)
       } else {
         return res.status(500).json({message: "Oups ! il y a eu un problème de connexion !"})
@@ -59,95 +54,32 @@ exports.getAllMessage = (req, res, next) => {
   });
 };
 
-exports.getUserAllMessage = (req, res, next) => {
-  connection.connect(function(err) {
-    const idAuthor = req.body.idUsers;
-
-    const author = [req.body.idUsers];
-    const sql = `SELECT * FROM messages WHERE idAuthor='?';`;
-    connection.query(sql, [author], function (err, result) {
-      if (result){
-        const results = JSON.parse(JSON.stringify(result));
-              const stringJson =JSON.stringify(results);
-              const json =  JSON.parse(stringJson);
-              console.log('>> username: ', json);
-        res.status(200).json(json)
-      } else {
-        return res.status(500).json({message: "Oups ! recuperation imposible !"})
-      }
-    });   
-  });  
-};
-exports.getOneMessage = (req, res, next) => {
-  const idMessageBody = req.body.idMessage;
-  const idUserBody = req.body.idUser;
-  const isAdminBody = req.body.isAdmin;
-
-  const oneMessage = [idMessageBody];
+// Seul admin et l'utilisateur on le droit de supprimer le message
+exports.deleteMessage = (req, res, next) => {
+  const author = req.body.idUser;
+  const isAdmin = req.body.isAdmin;
+  const IdMESSAGE = req.body.IdMESSAGE;
   
-  const sql1 = ` SELECT * FROM messages WHERE IdMESSAGE = ?;`;
+  const IdMessagePrepare = [IdMESSAGE];
+  const sql2 = `Select * FROM messages WHERE idMESSAGE = ?;`
+  
   connection.connect(function(err, result) {
-    console.log("=> dedans")
-    connection.query(sql1, [oneMessage], function(err, result){
-      const results = JSON.parse(JSON.stringify(result));
-      const stringJson =JSON.stringify(results);
-      const json =  JSON.parse(stringJson);
-      console.log(json[0].idAuthor);
-      console.log(idUserBody)
-      console.log( isAdminBody);
-
-      if (json[0].idAuthor == idUserBody || isAdminBody == 1){
-        const idAuthorJson= json[0].idAuthor;
-        const idMessageJson= json[0].idMESSAGE;
-        const titleJson= json[0].title;
-        const contentJson= json[0].content;
-
-        return res.status(200).json({
-              idAuthor: idAuthorJson,
-              idMessage: idMessageJson,
-              title: titleJson,
-              content: contentJson,
+    connection.query(sql2, [IdMessagePrepare], function(err, result){
+      if ( result[0].idAuthor == author || req.body.isAdmin == 1 ) {
+        connection.connect(function(err) {
+          const sql = `DELETE FROM messages Where idMESSAGE = ?;`;
+          connection.query(sql, [IdMessagePrepare], function (err, result) {
+          });
+          res.status(200).json({message: 'suppression du message réalisé.......!'});
         });
       } else {
         return res.status(403).json({message: 'vous n\'avez pas l\'autorisation nécesaire!'});
       }
-    })
+    });
   });
 };
 
-// Seul admin et l'utilisateur on le droit de supprimer le message
-exports.deleteMessage = (req, res, next) => {
-    const author = req.body.idUser;
-    const isAdmin = req.body.isAdmin;
-    const IdMESSAGE = req.body.IdMESSAGE;
-    console.log(">>> idMESSAGE => " + IdMESSAGE);
-
-    const IdMessagePrepare = [IdMESSAGE];
-    const sql2 = `Select * FROM messages WHERE idMESSAGE = ?;`
-
-    connection.connect(function(err, result) {
-        connection.query(sql2, [IdMessagePrepare], function(err, result){
-            console.log('>>> ok on a le retour' + result[0].idAuthor)
-          
-          if ( result[0].idAuthor == author || req.body.isAdmin == 1 ) {
-            console.log('3 >>> on peut supprimer');
-            connection.connect(function(err) {
-              console.log("4 >>> on rentre dans le deuxième connect ... !");
-              const sql = `DELETE FROM messages Where idMESSAGE = ?;`;
-              connection.query(sql, [IdMessagePrepare], function (err, result) {
-              console.log("5 >>> Le message 1 est supprimer .....!");
-              });
-              res.status(201).json({message: 'suppression du message réalisé.......!'});
-            });
-          } else {
-            return res.status(403).json({message: 'vous n\'avez pas l\'autorisation nécesaire!'});
-          }
-        });
-    });
-};
-
 // Seul admin et l'utilisateur on le droit de modifié un message 
-  
 exports.modifyMessage = (req, res, next) => {
   const idAuthor = req.body.idUser;
   const isAdmin = req.body.isAdmin;
@@ -175,7 +107,7 @@ exports.modifyMessage = (req, res, next) => {
               message: 'contenue du message modifié  !'
             });
           } else {
-            return res.status(403).json({message: "Vous n'êtes pas autorisé à modifier ce message !"});
+            return res.status(500).json({message: "Oups une erreur avec notre server !"});
           }
         });       
       } else {
@@ -183,6 +115,56 @@ exports.modifyMessage = (req, res, next) => {
       } 
     });        
   });
+};
+
+exports.getOneMessage = (req, res, next) => {
+  const idMessageBody = req.body.idMessage;
+  const idUserBody = req.body.idUser;
+  const isAdminBody = req.body.isAdmin;
+  
+  const oneMessage = [idMessageBody];
+  
+  const sql1 = ` SELECT * FROM messages WHERE IdMESSAGE = ?;`;
+  connection.connect(function(err, result) {
+    connection.query(sql1, [oneMessage], function(err, result){
+      const results = JSON.parse(JSON.stringify(result));
+      const stringJson =JSON.stringify(results);
+      const json =  JSON.parse(stringJson);
+      
+      if (json[0].idAuthor == idUserBody || isAdminBody == 1){
+        const idAuthorJson= json[0].idAuthor;
+        const idMessageJson= json[0].idMESSAGE;
+        const titleJson= json[0].title;
+        const contentJson= json[0].content;
+        
+        return res.status(200).json({
+          idAuthor: idAuthorJson,
+          idMessage: idMessageJson,
+          title: titleJson,
+          content: contentJson,
+        });
+      } else {
+        return res.status(403).json({message: 'vous n\'avez pas l\'autorisation nécesaire!'});
+      }
+    })
+  });
+};
+exports.getUserAllMessage = (req, res, next) => {
+  connection.connect(function(err) {
+
+    const author = [req.body.idUsers];
+    const sql = `SELECT * FROM messages WHERE idAuthor='?';`;
+    connection.query(sql, [author], function (err, result) {
+      if (result){
+        const results = JSON.parse(JSON.stringify(result));
+        const stringJson =JSON.stringify(results);
+        const json =  JSON.parse(stringJson);
+        res.status(200).json(json)
+      } else {
+        return res.status(500).json({message: "Oups ! recuperation imposible !"})
+      }
+    });   
+  });  
 };
 
 

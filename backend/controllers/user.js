@@ -15,48 +15,39 @@ exports.signup = (req, res, next) => {
       const password  = hash;
       const bio       = req.body.bio;
       const isAdmin   = 0;
-      console.log(">>> email => " + email);
-      console.log(">>> username => " + username);
-      console.log(">>> password => " + password);
-      console.log(">>> bio => " + bio);
-      console.log(">>> isAdmin => " + isAdmin);
       if (email != null || username != null || password != null) {
         const emailUsers = [email, username, password, bio, isAdmin];
         const valueEmail = email;
-
         connection.connect(function(err) {
-            const sql = `INSERT INTO users VALUES (NULL, ?)`;
-            const sql2 = `SELECT * FROM users WHERE email= ?;`;
-
-            connection.query(sql, [emailUsers], function (err, result) {
-              console.log(result)
-              if (result){
-                connection.query(sql2, [valueEmail], (err, result) => {
-                  console.log(">>log 3 => " + result[0].password);
-                  const userIdRes = result[0].IdUSERS;
-                  const emailRes = result[0].email
-                  const usernameRes = result[0].username;
-                  const isAdminRes = result[0].isAdmin;
-                  const bioRes = result[0]. bio;
-                    if (result){
-                      return res.status(200).json({
-                        isAdmin : isAdminRes,
-                        userId : userIdRes ,
-                        username: usernameRes,
-                        email : emailRes,
-                        bio : bioRes,
-                        token: jwt.sign(
-                          { IdUSERS: userIdRes  },
-                          'A156rt12345Ay11515QG335mOt153de955247PasSe1853459foRt',
-                          {expiresIn: '24h'}
-                          )
-                        });    
-                    } else {
-                       return res.status(401).json({ error: 'Mots de passe incorrect ! ', connect: 'false',});
-                    }
-                  })
-              } else { return res.status(500).json({message: "Oups..! Impossible de vous enregistrer !"});}
-            });
+          const sql = `INSERT INTO users VALUES (NULL, ?)`;
+          const sql2 = `SELECT * FROM users WHERE email= ?;`;
+          connection.query(sql, [emailUsers], function (err, result) {
+            if (result){
+              connection.query(sql2, [valueEmail], (err, result) => {
+                const userIdRes = result[0].IdUSERS;
+                const emailRes = result[0].email
+                const usernameRes = result[0].username;
+                const isAdminRes = result[0].isAdmin;
+                const bioRes = result[0]. bio;
+                  if (result){
+                    return res.status(200).json({
+                      isAdmin : isAdminRes,
+                      userId : userIdRes ,
+                      username: usernameRes,
+                      email : emailRes,
+                      bio : bioRes,
+                      token: jwt.sign(
+                        { IdUSERS: userIdRes },
+                        'A156rt12345Ay11515QG335mOt153de955247PasSe1853459foRt',
+                        {expiresIn: '24h'}
+                        )
+                      });    
+                  } else {
+                      return res.status(500).json({ error: "impossible d'enregistré l'utilisateur !" , connect: 'false',});
+                  }
+                })
+            } else { return res.status(500).json({message: "Oups..! Impossible de vous enregistrer !"});}
+          });
         });   
       } else {
         return res.status(400).json({ 'error': 'il manque des paramètres ! ...'});
@@ -76,7 +67,6 @@ exports.login = (req, res, next) => {
       connection.connect(function(err) {
           const sql1 = `SELECT EXISTS( SELECT * FROM users WHERE email=? ) AS users_exists;`;
           const sql2 = `SELECT * FROM users WHERE email=?;`;
-          // je lance la requête à la BD
           connection.query(sql1, [sqlPrepare], (err, result) => {
               if (result[0].users_exists) {
                 connection.query(sql2, [sqlPrepare], (err, result) => {
@@ -108,12 +98,10 @@ exports.login = (req, res, next) => {
                       return;
                     }
                   })
-                  .catch(err => res.status(500).json({ error :  'mauvais mot de passe...!'}));
+                  .catch(err => res.status(500).json({ error :  'Mauvais mot de passe...!'}));
                 });
               }else {
-                return res.status(401).json({ message: "l'utilisateur n'existe pas"});
-                      
-
+                return res.status(400).json({ message: "l'utilisateur n'existe pas"});
               }
           });
       }); 
@@ -131,12 +119,8 @@ exports.modifyBio = (req, res, next) =>{
       const bioModify = [bio];
       const sql2 = `UPDATE users SET bio=? WHERE idUSERS=?;`;
       const sql1 = `SELECT EXISTS( SELECT * FROM users WHERE idUSERS=? ) AS users_exists;`;
-
       connection.query(sql1, [userExist], function (err, result) {
-        console.log(result[0].users_exists)
         if (result[0].users_exists){
-          // if (isAdmin === 1 || idUser === result.)
-          console.log( "ok voir resultat => ")
           connection.query(sql2, [[bioModify], [userExist]], function (err, result){
           })
           return res.status(200).json({message :'biographie modifié !'})
@@ -154,11 +138,11 @@ exports.getAllUser = (req, res, next) =>{
     connection.query(sql, function (err, result) {
       if (result){
         const results = JSON.parse(JSON.stringify(result));
-              const stringJson =JSON.stringify(results);
-              const json =  JSON.parse(stringJson);
+        const stringJson =JSON.stringify(results);
+        const json =  JSON.parse(stringJson);
         res.status(200).json(json)
       } else {
-        return res.status(500).json({message: "erreur"})
+        return res.status(500).json({message: "Problème communication server "})
       }
     });
   });
@@ -180,14 +164,12 @@ exports.deleteOneUser = (req, res, next) =>{
               const stringJson =JSON.stringify(results);
               const json =  JSON.parse(stringJson);
               const UseDelete = json[0].username;
-
               const sql2 = `DELETE FROM users Where username = ?;`;
-
               connection.query(sql2, [UseDelete], function(err, valid){
                 if (valid) {
                   res.status(200).json({message: 'suppression utilisateur effectué ..!'});
                 } else {
-                  res.status(403).json({message: 'Suppression utilisateur échoué..!'});
+                  res.status(500).json({message: 'Suppression utilisateur échoué..!'});
                 }
               }); 
             } else { 
@@ -202,9 +184,6 @@ exports.modifyStatus = (req, res, next) =>{
   const isAdmin = req.body.isAdmin;
   const idUser = req.body.idUser;
   const statusChange = req.body.status;
-  console.log(isAdmin);
-  console.log(idUser);
-  console.log(statusChange);
 
   if (isAdmin != 1){
     return res.status(401).json({ error: "vous n'avez pas l'authorisation necessaire !"});
@@ -223,11 +202,9 @@ exports.modifyStatus = (req, res, next) =>{
           console.log('on rentre pour envoyer')
           connection.query(sql2, [[statusChange], [researchUser]], function (err, result) {
             if (result) {
-              return res.status(200).json({
-                message: 'status modifié  !'
-              });
+              return res.status(200).json({ message: 'status modifié  !' });
             } else {
-              return res.status(403).json({message: "Vous n'êtes pas autorisé à modifier ce status !"});
+              return res.status(500).json({message: "Problème avec la connection serveur"});
             }
           });       
         } else {

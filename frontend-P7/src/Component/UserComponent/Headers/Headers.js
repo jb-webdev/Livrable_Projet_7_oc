@@ -29,7 +29,7 @@ export default class Headers extends Component {
                 <div className=" 1h-100">
                     <CompoUsername label={this.state.username}/>
                     <CompoBIo label= {this.state.bio} />
-                    {this.state.isAdmin == 1 ? <CompoStatusCompte /> : <p></p> }
+                    {this.state.isAdmin === "1" ? <CompoStatusCompte /> : <p></p> }
                 </div>
                 <Link 
                     className="btn btnBox  btn-sm btn-outline-danger btn-block mt-3 " 

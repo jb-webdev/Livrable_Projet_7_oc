@@ -4,7 +4,7 @@
  * Composant pour la section de modification d'un message
  * 
  */
-import React, { Component,useState } from 'react'
+import React, { Component} from 'react'
 import {Redirect, Link} from'react-router-dom';
 import './ModifyMessage.css';
 
@@ -54,7 +54,7 @@ export default class ModifyMessage extends Component {
         fetch("http://localhost:4200/api/message/modify", requestOptions)
             .then(response => {
                 console.log(response.status);
-                if (response.status == 200){
+                if (response.status === 200){
                     this.setState({
                         redirectPage : true,
                     })
@@ -70,7 +70,6 @@ export default class ModifyMessage extends Component {
         const idMessage = sessionStorage.getItem("idMessageToModify");
         const idUser = sessionStorage.getItem("userId");
         const isAdmin = sessionStorage.getItem("isAdmin");
-        const token = sessionStorage.getItem("token");
         const msgToModify = {
             idMessage: idMessage,
             idUser: idUser, 

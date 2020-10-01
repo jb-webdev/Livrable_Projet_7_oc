@@ -28,7 +28,6 @@ export default class CompoSendmessage extends Component {
         this.setState({
             [event.target.name] : event.target.value
         });
-        console.log(this.state.title)
     }
 
     envoyerMessage = (event) => {

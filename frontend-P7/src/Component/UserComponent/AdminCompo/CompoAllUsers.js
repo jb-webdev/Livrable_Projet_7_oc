@@ -80,7 +80,6 @@ export default class CompoAllUser extends Component {
                     return response.json()
                 })
                 .then(json => {
-                    console.log(json);
                     this.setState({
                         usersApi : json,
                     })

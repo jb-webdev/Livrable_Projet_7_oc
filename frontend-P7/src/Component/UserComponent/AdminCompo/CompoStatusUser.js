@@ -32,8 +32,6 @@ export default class CompoStatusUser extends Component {
             idUser: this.props.idUser,
             status: changeStatus,
         };
-        console.log(this.props.token);
-        console.log(changementStatus);
 
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -48,12 +46,10 @@ export default class CompoStatusUser extends Component {
 
         fetch("http://localhost:4200/api/user/status", requestOptions)
             .then(response => {
-                console.log(response.status);
-                if (response.status == 200){
+                if (response.status === 200){
                     this.setState({
                         redirectPage : true,
                     })
-                    console.log(">>> response dans la conditon fetch 200 => ok ca marche")
                 }
                 return response.json()
             })
@@ -65,7 +61,7 @@ export default class CompoStatusUser extends Component {
         return (
             <div className="boxStatus" >
             {this.state.redirectPage ? (<Redirect to="/chargement"/>) : (null)}
-                {this.state.curentStatus != 0 ? (
+                {this.state.curentStatus !== 0 ? (
                     <button className="btn btnBox w-10 btn-sm btn-outline-primary btn-block mt-3"  
                         type="onClick" 
                         name= "0"

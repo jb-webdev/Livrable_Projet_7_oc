@@ -11,7 +11,7 @@ router.put      ('/', auth, userCtrl.modifyBio);
 router.get      ('/all',auth, userCtrl.getAllUser);
 
 // UNIQUEMENT POUR L'ADMIN
-router.delete   ('/deleteUser',auth, userCtrl.deleteOneUser); // il rajouter un message d'erreur si l'utilisateur n'existe pas
+router.delete   ('/deleteUser',auth, userCtrl.deleteOneUser); 
 router.put      ('/status', auth, userCtrl.modifyStatus);
 
 

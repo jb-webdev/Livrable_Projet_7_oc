@@ -50,8 +50,6 @@ export default class LoginUser extends Component {
         
         fetch("http://localhost:4200/api/user/login", requestOptions)
         .then(response => {
-            console.log(response.status);
-            
             if (response.status !== 200){
                 this.props.history.push('/error')
                 alert("Connection impossible ! veuillez verifier vos identifiants !")
