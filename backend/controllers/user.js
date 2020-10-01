@@ -202,6 +202,9 @@ exports.modifyStatus = (req, res, next) =>{
   const isAdmin = req.body.isAdmin;
   const idUser = req.body.idUser;
   const statusChange = req.body.status;
+  console.log(isAdmin);
+  console.log(idUser);
+  console.log(statusChange);
 
   if (isAdmin != 1){
     return res.status(401).json({ error: "vous n'avez pas l'authorisation necessaire !"});

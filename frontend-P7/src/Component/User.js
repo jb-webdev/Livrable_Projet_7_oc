@@ -22,7 +22,6 @@ export default class User extends Component {
         token : sessionStorage.getItem("token"),
     }; 
     
-
     render() { 
         return (
             <div>

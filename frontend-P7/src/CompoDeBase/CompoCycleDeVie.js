@@ -11,8 +11,6 @@ class CompoCycleDeVie extends Component {
         console.log("Je passe dans le constructor"); //où sans constructeur en déclarant le state avant le render
     }
     
-
-
     render(){
         
         console.log("Je passe dans le render");

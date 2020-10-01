@@ -12,7 +12,7 @@ router.get      ('/all',auth, userCtrl.getAllUser);
 
 // UNIQUEMENT POUR L'ADMIN
 router.delete   ('/deleteUser',auth, userCtrl.deleteOneUser); // il rajouter un message d'erreur si l'utilisateur n'existe pas
-router.put      ('/status',auth, userCtrl.modifyStatus);
+router.put      ('/status', auth, userCtrl.modifyStatus);
 
 
 module.exports = router;

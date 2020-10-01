@@ -21,7 +21,6 @@ export default class CompoBoxAllUser extends Component {
         
     }
 
-
     render() {
         
         return (

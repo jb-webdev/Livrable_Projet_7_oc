@@ -1,11 +1,12 @@
 /**
  * @author j.boero
  * 
- * Composant qui affiche tous les tutilisateur à l'administrateur
+ * Composant qui affiche tous les utilisateurs
  * 
  */
 import React, { Component } from 'react'
 import AvatarUser from './logo192.png';
+import CompoStatusUser from './CompoStatusUser';
 import {Redirect} from'react-router-dom';
 
 
@@ -70,6 +71,7 @@ export default class CompoAllUser extends Component {
 // REQUETE FETCH POUR RECUPERER TOUS LES USERS
         componentWillMount(){
             const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
             myHeaders.append("Authorization", "Bearer " + this.state.token);
 
             const requestOptions = {
@@ -87,13 +89,11 @@ export default class CompoAllUser extends Component {
                     this.setState({
                         usersApi : json,
                     })
-                    console.log(">>> user API =>" + this.state.usersApi[0].username);
                 })
                 .catch(error => console.log('error', error));
         }
 
     render() {
-        // console.log(this.state.userIdDelete)
         return (
             
             <div>
@@ -106,20 +106,7 @@ export default class CompoAllUser extends Component {
                             <strong className="d-block text-gray-dark" key={allUsers.IdUSERS + allUsers.email} >{allUsers.email} </strong>
                             <p key={allUsers.IdUSERS + allUsers.bio}>{allUsers.bio}</p>
                         </div>
-                        {/* <div>
-                            <div className="form-check" key ={allUsers.IdUSERS}>
-                                <input className="form-check-input" type="radio" name={allUsers.IdUSERS} id="exampleRadios1" value="user" checked />
-                                <label className="form-check-label" htmlfor="exampleRadios1">
-                                    Utilisateur
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="admin" />
-                                <label clasNames="form-check-label" htmlfor="exampleRadios2">
-                                    Administrateur
-                                </label>
-                            </div>
-                        </div> */}
+                        <CompoStatusUser  isAdmin={allUsers.isAdmin} idUser={allUsers.IdUSERS} token={this.state.token} />
                         <div>
                             <button onClick={this.onClick} 
                                 className="btn btnBox w-10 btn-sm btn-outline-danger btn-block mt-3" 
