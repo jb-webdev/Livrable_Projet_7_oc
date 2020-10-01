@@ -25,7 +25,7 @@ export default class CompoBoxAllUser extends Component {
                 <nav>
                      <div className="nav nav-tabs " id="nav-tab" role="tablist" >
                          <button 
-                            className="nav-link bg-primary active" 
+                            className="nav-link bg-success active" 
                             type="submit" data-toggle="tab" 
                             onClick={this.montrerUser} 
                          >All users

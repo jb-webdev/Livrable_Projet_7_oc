@@ -15,30 +15,30 @@ export default class ModifyMessage extends Component {
             title: '',
             content: '',
             username : sessionStorage.getItem('username'),
-            titlePlaceholder : '',
-            contentPlaceholder: '',
-            titleModify: '',
-            contentModify: '',
+            valueContent : "",
+            valueTitle: "",
+            
             redirectPage : false,
-            token : sessionStorage.getItem('token')
+            token : sessionStorage.getItem('token'),
         }
     }
-    change = e => {
+    handleChange = e => {
         this.setState({
-            [e.target.id]: e.target.value
-        })
-    }
+            [e.target.id] : e.target.value
+        });
+    };
+
     submit = e => {
         e.preventDefault();
-        console.log(this.state.titleModify);
-        console.log(this.state.contentModify);
+        console.log(this.state.valueTitle);
+        console.log(this.state.valueContent);
         
         const sendModify = {
             idUser: sessionStorage.getItem("userId"),
             isAdmin: sessionStorage.getItem("isAdmin"),
             idMESSAGES: sessionStorage.getItem("idMessageToModify"),
-            title: this.state.titleModify,
-            content: this.state.contentModify, 
+            title: this.state.valueTitle,
+            content: this.state.valueContent, 
         }
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -50,7 +50,7 @@ export default class ModifyMessage extends Component {
             body: JSON.stringify(sendModify),
             redirect: 'follow'
         };
-        // requete pour modifier le message
+    //     // requete pour modifier le message
         fetch("http://localhost:4200/api/message/modify", requestOptions)
             .then(response => {
                 console.log(response.status);
@@ -64,7 +64,7 @@ export default class ModifyMessage extends Component {
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
     }
-
+// je recupere le message a modifier dans la base de donnée.
     componentDidMount() {
         const idMessage = sessionStorage.getItem("idMessageToModify");
         const idUser = sessionStorage.getItem("userId");
@@ -91,10 +91,9 @@ export default class ModifyMessage extends Component {
                return response.json()
             })
             .then(json =>{ 
-                console.log(json)
                 this.setState({
-                    titlePlaceholder : json.title,
-                    contentPlaceholder: json.content,
+                    valueTitle : json.title,
+                    valueContent: json.content,
                 })
             })
             .catch(error => console.log('error', error));
@@ -110,25 +109,23 @@ export default class ModifyMessage extends Component {
                         <div className="form-group mt-5">
                             <p>Message à modifier</p>
                             <label htmlFor="title">Titre à modifier</label>
-                            <input className="form-control"  
-                                type="text" 
-                                placeholder={this.state.titlePlaceholder}
-                                id="titleModify"
-                                onChange={this.change}
-                                value={this.state.titleModify}
-                            />
+                            <textarea className="form-control"  
+                                rows="1"
+                                id="valueTitle"
+                                onChange={this.handleChange}
+                                value={this.state.valueTitle}
+                            >
+                            </textarea>
                         </div>
             
                         <div className="form-group">
                             <label htmlFor="textarea" >Text à modifier</label>
                             <textarea className="form-control" 
                                 rows="3"
-                                id="contentModify"
-                                // placeholder={this.state.contentPlaceholder}
-                                onChange={this.change}
-                                value={this.state.contentModify}
+                                id="valueContent"
+                                onChange={this.handleChange}
+                                value={this.state.valueContent}
                             > 
-                            {this.state.contentPlaceholder}
                             </textarea>
                         </div>
                         <div className='boxButton'>
