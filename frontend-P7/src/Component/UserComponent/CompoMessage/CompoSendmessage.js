@@ -41,11 +41,8 @@ export default class CompoSendmessage extends Component {
             likes: this.state.likes,
             itemsSendMessage: [...this.state.itemsSendMessage, {title: this.state.title, content: this.state.content, attachement:this.state.attachement, idUser: this.state.idUser, likes: this.state.likes}]
         });
-        console.log(this.state.title);
-
 
     // envoie de la requete
-        
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
             myHeaders.append("Authorization", "Bearer " + this.state.token);
@@ -57,7 +54,6 @@ export default class CompoSendmessage extends Component {
             urlencoded.append("likes", this.state.likes);
             urlencoded.append("idUser", this.state.idUser);
             urlencoded.append("username", this.state.username);
-
 
         var requestOptions = {
             method: 'POST',
@@ -77,11 +73,7 @@ export default class CompoSendmessage extends Component {
         })
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
-
     }
-
-
-
 
     render() {
         return (

@@ -8,7 +8,6 @@
  */
 import React, { Component } from 'react'
 import AvatarUser from './logo192.png';
-// import MessageToMap from "./MessageToMap";
 import "./Body.css";
 import CompoSendmessage from '../CompoMessage/CompoSendmessage';
 import ModifyMessage from '../CompoMessage/ModifyMessage'

@@ -2,13 +2,11 @@
  * @author j.boero
  * 
  * Composant qui affiche la page de connexion login utilisateur
- * utilisation d'un react HOOK pour redireger l'utilisateur
+ * 
  */
 import React, { Component } from 'react';
 import LogoGroup from './bigLogoRed.png';
 import {Link} from'react-router-dom';
-
-
 
 export default class LoginUser extends Component {
     constructor(props){
@@ -40,10 +38,8 @@ export default class LoginUser extends Component {
             email: this.state.email,
             password: this.state.password,               
         }; 
-        console.log(userLogin);
         const myHeaders = new Headers();
-        
-        myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Content-Type", "application/json");
         
         const requestOptions = {
             method: 'POST',
@@ -51,7 +47,6 @@ export default class LoginUser extends Component {
             body: JSON.stringify(userLogin),
             redirect: 'follow'
         };
-        
         
         fetch("http://localhost:4200/api/user/login", requestOptions)
         .then(response => {
@@ -65,7 +60,6 @@ export default class LoginUser extends Component {
                     responseStatus : true,
                 })
             }
-            console.log(response.json);
             return response.json();
         })
         .then(json => {

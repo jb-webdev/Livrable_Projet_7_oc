@@ -2,7 +2,6 @@
  * @author j.boero
  * 
  * Compo Page spinner
- 
  * 
  */
 import React, { Component } from 'react'

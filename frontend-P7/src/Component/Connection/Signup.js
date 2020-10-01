@@ -4,7 +4,6 @@
  * Compo Section Signup
  * Affiche un formulaire d'enregistrement utilisateur
  */
-
 import React, { Component } from 'react';
 import LogoGroup from './bigLogoRed.png';
 import {Link} from'react-router-dom';
@@ -13,7 +12,6 @@ import './Connection.css';
 export default class SignupUser extends Component {
     constructor(props){
         super(props);
-
         this.state = {
             SignupUser : "" ,
             userSignup : [],
@@ -44,14 +42,12 @@ export default class SignupUser extends Component {
             password: this.state.password,
             items: [...this.state.items, {username: this.state.username, email: this.state.email, bio: this.state.bio, password: this.state.password}]
         });
-        // début initialisation de la requête fetch
-        
+        // requête fetch début
             const email = this.state.email;
             const username = this.state.username;
             const password = this.state.password;
             const bio = this.state.bio;
             
-        
             const myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
                 
@@ -89,22 +85,17 @@ export default class SignupUser extends Component {
     } 
 
     render() {
-        
         return (
-            
             <div >
                 <div className="row justify-content-center">
                     <form onSubmit={this.onSubmit}>
                         <img className="form  mt-5" src={LogoGroup} alt="logo groupomania" style={{ height: "150px"}} />
-                    
                         <h1 className="h3- mt-3 mb-3 font-weight-normal text-center">Social network</h1>
-                        
                         <label className="sr-only" htmlFor="username">Username</label>
                         <input className="form-control mt-3" 
                             type="text" 
                             placeholder ="Username" 
-                            name="username" 
-                            
+                            name="username"
                             onChange={this.onChange}
                             value={this.state.username}
                         />
@@ -114,7 +105,6 @@ export default class SignupUser extends Component {
                             type="text" 
                             placeholder="Decrivez-vous !" 
                             name="bio"
-                            
                             onChange={this.onChange}
                             value={this.state.bio} 
                         />
@@ -123,17 +113,14 @@ export default class SignupUser extends Component {
                             type="email" 
                             placeholder ="Address@email.com" 
                             name="email" 
-                        
                             onChange={this.onChange}
                             value={this.state.email}
                         />
-
                         <label className="sr-only" htmlFor="inputPassword">Password</label>
                         <input className="form-control mt-3" 
                             type="password" 
                             placeholder="Password" 
                             name="password"
-                        
                             onChange={this.onChange}
                             value={this.state.password} 
                         />
@@ -144,16 +131,12 @@ export default class SignupUser extends Component {
                         >
                             S'enregistrer ! 
                         </button>
-
                         <p className="mt-3 mb-3 text-muted text-center">@Groupomania 2020</p>
-
                     </form>
                     </div>
-                    
                     <div className="linkContainer">
                         <Link className="SimpleLink" to="/login">Déja inscrit !!!</Link>
                     </div>
-
             </div>  
         )
     }

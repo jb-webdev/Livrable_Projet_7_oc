@@ -28,9 +28,6 @@ class ErrorPage extends Component  {
         }, 2000);
     }
     render () {
-        
-    
-        
         return (
             <div className="container">
             {this.state.redirectionError ? (<Redirect to="/" />) : (null)}

@@ -7,9 +7,7 @@
 import React, { Component } from 'react';
 import CompoAllUser from './CompoAllUsers';
 
-
 export default class CompoBoxAllUser extends Component {
-
     state ={
         showUser : false,
     }
@@ -22,7 +20,6 @@ export default class CompoBoxAllUser extends Component {
     }
 
     render() {
-        
         return (
             <div>
                 <nav>

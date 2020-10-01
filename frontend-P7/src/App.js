@@ -10,15 +10,11 @@ import React, { Component } from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from'react-router-dom';
 import Navigation from './Component/Navigation/Navigation';
-// import Accueil from './Component/Accueil/Accueil';
 import SignupUser from './Component/Connection/Signup'
 import LoginUser from './Component/Connection/Login';
 import User from './Component/User';
 import ErrorPage from './Component/ErrorPage/ErrorPage';
 import Spinner from './Component/Connection/Spinner'
-
-
-
 
 class  App extends Component {
   constructor(props) {
@@ -34,41 +30,19 @@ class  App extends Component {
     
       return (
         <div className="Container">
-          
             <Router>
-              
               <Navigation />
-
               <Switch>
                     <Route path="/" exact component={SignupUser} />
                     <Route path="/login" exact component={LoginUser} />
                     <Route path="/user" exact component={User}/>
                     <Route path="/chargement" exact component={Spinner}/>
                     <Route path="/error" exact component={ErrorPage}/>
-
                     <Route component={ErrorPage} />
               </Switch>
-
             </Router>
-          
-          
-          
         </div>
       );
     }
   }
   export default App;
-  
- 
-
-// {/* <Router>
-//               <Navigation />
-//               <Switch>
-//                 <Route path='/' component={Accueil} />
-//                 {/* <Route exact path="/" render={()=> (
-//                   this.state.userConnect.Accueil ? (<Redirect to="/user"/>) : (<Accueil />)
-//                 ) } /> */}
-            //     <Route path="/user" component={User} />
-            //     <Route component ={ErrorPage} />
-            //   </Switch>
-            // </Router> */}

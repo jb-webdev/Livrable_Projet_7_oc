@@ -1,7 +1,7 @@
 /**
  * @author j.boero
  * 
- * Composant pour la section envoie d'un message
+ * Composant pour la section de modification d'un message
  * 
  */
 import React, { Component,useState } from 'react'

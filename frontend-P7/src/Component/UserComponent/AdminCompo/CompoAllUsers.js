@@ -9,8 +9,6 @@ import AvatarUser from './logo192.png';
 import CompoStatusUser from './CompoStatusUser';
 import {Redirect} from'react-router-dom';
 
-
-
 export default class CompoAllUser extends Component {
     constructor(props){
         super(props);
@@ -55,8 +53,6 @@ export default class CompoAllUser extends Component {
                     sessionStorage.setItem("msgRetour","Utilisateur suprimé ! ")
                     this.setState({ redirection: true });
                     
-                    // alert('Utilisateur suprimer ! ')
-                    
                 } else if (response.status === 403){
                     sessionStorage.setItem("msgRetour","Utilisateur suprimer ! ")
                     alert("Suppression utilisateur échoué..!")
@@ -65,7 +61,6 @@ export default class CompoAllUser extends Component {
             })
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-
         } 
 
 // REQUETE FETCH POUR RECUPERER TOUS LES USERS
@@ -95,7 +90,6 @@ export default class CompoAllUser extends Component {
 
     render() {
         return (
-            
             <div>
                 {this.state.redirection ? (<Redirect to="/chargement"/>): (null)}
                 {this.state.usersApi.map((allUsers) => 

@@ -1,7 +1,7 @@
 /**
  * @author j.boero
  * 
- * Composant qui affiche tous les utilisateurs
+ * Composant qui affiche l'option de changement de staus d'un utilisateurs
  * 
  */
 import React, { Component } from 'react'
@@ -19,7 +19,6 @@ export default class CompoStatusUser extends Component {
         }  
     }
     
-    
     curentStatusToModify = (e) => {
         console.log(e.target.name);
         e.preventDefault();
@@ -28,7 +27,6 @@ export default class CompoStatusUser extends Component {
             changeStatus : changeStatus,
         })
 
-        
         const changementStatus = {
             isAdmin : sessionStorage.getItem('isAdmin'),
             idUser: this.props.idUser,
