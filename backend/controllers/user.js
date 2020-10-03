@@ -7,7 +7,7 @@ const { unsubscribe } = require('../routes/userRoute');
 
 
 // enregistrement user
-exports.signup = (req, res, next) => { 
+exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash =>{ 
       const email     = req.body.email;

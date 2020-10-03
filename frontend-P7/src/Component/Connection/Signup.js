@@ -30,7 +30,6 @@ export default class SignupUser extends Component {
         this.setState({
             [event.target.name] : event.target.value
         });
-        // console.log(this.state.name)
     } 
       // on ecoute l'evenement du bouton 
     onSubmit = (event) => {
