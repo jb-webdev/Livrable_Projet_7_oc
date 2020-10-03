@@ -65,7 +65,7 @@ export default class Body extends Component {
 
         fetch("http://localhost:4200/api/message/delete", requestOptions)
             .then(response => {
-                if (response.status === 201){
+                if (response.status === 200){
                     sessionStorage.setItem("msgRetour","message suprimé ! ")
                     this.setState({ redirection: true });
                 } else if (response.status === 500){
@@ -123,7 +123,7 @@ export default class Body extends Component {
                                         <p className="contentMessage" key={allMessages.idMESSAGE + allMessages.content}>{allMessages.content}</p>
                                         
                                     </div>
-                                    {this.state.isAdmin === "1" || this.state.idUser === allMessages.idAuthor? (
+                                    {this.state.isAdmin == 1 || this.state.idUser == allMessages.idAuthor? (
                                         
                                     <div className="modifyBox col-sm-3">
                                         <button onClick={this.showModify}

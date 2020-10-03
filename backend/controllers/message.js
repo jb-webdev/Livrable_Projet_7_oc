@@ -23,7 +23,7 @@ exports.createMessage = (req, res, next) => {
               const sql = `INSERT INTO messages VALUES (NULL, ?);`;
               connection.query(sql, [valuesCreate], function (err, result) {
                 if (result) {
-                  res.status(201).json({
+                  res.status(200).json({
                     title: title,
                     content: content,
                     attachement: attachement,
@@ -61,6 +61,7 @@ exports.deleteMessage = (req, res, next) => {
   const IdMESSAGE = req.body.IdMESSAGE;
   
   const IdMessagePrepare = [IdMESSAGE];
+  console.log("4 >>>IdMESSAGE => " + IdMessagePrepare);
   const sql2 = `Select * FROM messages WHERE idMESSAGE = ?;`
   
   connection.connect(function(err, result) {

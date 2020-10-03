@@ -63,7 +63,7 @@ export default class CompoSendmessage extends Component {
 
         fetch("http://localhost:4200/api/message", requestOptions)
         .then(response => {
-            if (response.status === 201){
+            if (response.status === 200){
                 sessionStorage.setItem("msgRetour","message enregistré ")
                 this.setState({ redirection: true });
             }
