@@ -16,7 +16,7 @@ import './ErrorPage.css';
 class ErrorPage extends Component  {  
     constructor(props){
         super(props);
-        this.state = { // on recupere l'id au clic du boutton
+        this.state = {
             redirectionError: false,
         }
     } 
@@ -42,6 +42,4 @@ class ErrorPage extends Component  {
         )
     }
 }
-
-
 export default ErrorPage
