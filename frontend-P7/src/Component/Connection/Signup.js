@@ -118,7 +118,6 @@ export default class SignupUser extends Component {
                         <label className="sr-only" htmlFor="inputPassword">Password</label>
                         <input className="form-control mt-3" 
                             type="password"
-                            minlength="8" required
                             placeholder="Password" 
                             name="password"
                             onChange={this.onChange}
