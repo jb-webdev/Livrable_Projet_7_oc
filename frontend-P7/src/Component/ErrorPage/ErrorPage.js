@@ -19,7 +19,7 @@ class ErrorPage extends Component  {
         this.state = {
             redirectionError: false,
         }
-    } 
+    }
     componentDidMount () {
         setTimeout(() => {
         this.setState({

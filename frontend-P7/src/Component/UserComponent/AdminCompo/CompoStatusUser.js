@@ -1,7 +1,7 @@
 /**
  * @author j.boero
  * 
- * Composant qui affiche l'option de changement de staus d'un utilisateurs
+ * Composant qui affiche l'option de changement de status d'un utilisateurs
  * 
  */
 import React, { Component } from 'react'
@@ -13,7 +13,7 @@ export default class CompoStatusUser extends Component {
         super(props);
         this.state = {
             curentStatus : this.props.isAdmin,
-            isAdmin : sessionStorage.getItem('isAdmin'),
+            isAdmin : this.props.value.isAdmin,
             changeStatus : '',
             redirectPage: false,
         }  
@@ -28,14 +28,14 @@ export default class CompoStatusUser extends Component {
         })
 
         const changementStatus = {
-            isAdmin : sessionStorage.getItem('isAdmin'),
+            isAdmin : this.props.value.isAdmin,
             idUser: this.props.idUser,
             status: changeStatus,
         };
 
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Authorization", "Bearer " + this.props.token);
+            myHeaders.append("Authorization", "Bearer " + this.props.value.token);
 
         const requestOptions = {
             method: 'PUT',

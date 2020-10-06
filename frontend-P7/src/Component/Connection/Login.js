@@ -6,7 +6,7 @@
  */
 import React, { Component } from 'react';
 import LogoGroup from './bigLogoRed.png';
-import {Link} from'react-router-dom';
+import {Link, Redirect} from'react-router-dom';
 
 export default class LoginUser extends Component {
     constructor(props){
@@ -50,9 +50,11 @@ export default class LoginUser extends Component {
         
         fetch("http://localhost:4200/api/user/login", requestOptions)
         .then(response => {
+            console.log(response.status)
             if (response.status !== 200){
-                this.props.history.push('/error')
-                alert("Connection impossible ! veuillez verifier vos identifiants !")
+                console.log("different de 200 .....!")
+                // this.props.history.push('/error')
+                // alert("Connection impossible ! veuillez verifier vos identifiants !")
             }else {
                 this.setState({
                     responseStatus : true,
@@ -63,16 +65,17 @@ export default class LoginUser extends Component {
         .then(json => {
             
             if (json.username ) {
-                sessionStorage.setItem("connect", true);
-                sessionStorage.setItem("isAdmin", json.isAdmin);
-                sessionStorage.setItem("userId", json.userId);
-                sessionStorage.setItem("username", json.username);
-                sessionStorage.setItem("email", json.email);
-                sessionStorage.setItem("bio", json.bio);
-                sessionStorage.setItem("token", json.token);
-            }
-            if (this.state.responseStatus === true){
-                this.props.history.push('/chargement')
+                const user = {
+                    connect: true,
+                    userId:  json.userId,
+                    username : json.username,
+                    email : json.email,
+                    bio : json.bio,
+                    isAdmin : json.isAdmin,
+                    token : json.token
+                }
+                this.setState(user)
+                this.props.changeUser(user)
             }
         })
         .catch(error => console.log('error', error));
@@ -83,6 +86,7 @@ export default class LoginUser extends Component {
         return (
             
             <div>
+            {this.state.responseStatus ? (<Redirect to="/user" />) : (null)}
                 <div className="row justify-content-center">
                     
                     <form onSubmit={this.onSubmit}>

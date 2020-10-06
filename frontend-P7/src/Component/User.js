@@ -10,29 +10,28 @@ import Headers from './UserComponent/Headers/Headers'
 import Body from './UserComponent/Body/Body'
 import CompoBoxAllUsers from './UserComponent/AdminCompo/CompoBoxAllUsers';
 import ErrorPage from './ErrorPage/ErrorPage';
+import { UserContext } from './Connection/UserContext';
 
 export default class User extends Component {
-    state = {
-        userConnect: sessionStorage.getItem("connect"),
-        isAdmin: sessionStorage.getItem("isAdmin"),
-        userId: sessionStorage.getItem("userId"),
-        username : sessionStorage.getItem("username"),
-        email: sessionStorage.getItem("email"),
-        token : sessionStorage.getItem("token"),
-    }; 
-    
-    render() { 
-        return (
-            <div>
-                {this.state.userConnect ? (
-                    <div className="container mt-3">
-                        <Headers/> 
-                        {this.state.isAdmin === "1" ? (<CompoBoxAllUsers />) : null}
-                        <Body />
-                    </div>
-                ) : (<ErrorPage/>)}
-                </div>  
-            )
+     
+        constructor(props){
+            super(props);
+            this.state = {};
+        }
+        render() { 
+            return <UserContext.Consumer>
+                {user => 
+                    <div>
+                        {user.connect ? (
+                            <div className="container mt-3">
+                                <Headers/> 
+                                {this.props.value.isAdmin === 1 ? (<CompoBoxAllUsers value={user} />) : null}
+                                <Body value={user}/>
+                            </div>
+                            ) : (<ErrorPage/>)}
+                    </div>  
+                }  
+            </UserContext.Consumer> 
         }
 }
 

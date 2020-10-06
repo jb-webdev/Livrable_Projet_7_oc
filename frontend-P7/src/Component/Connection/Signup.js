@@ -6,20 +6,21 @@
  */
 import React, { Component } from 'react';
 import LogoGroup from './bigLogoRed.png';
-import {Link} from'react-router-dom';
+import {Link, Redirect} from'react-router-dom';
 import './Connection.css';
 
 export default class SignupUser extends Component {
     constructor(props){
         super(props);
         this.state = {
-            SignupUser : "" ,
-            userSignup : [],
+            statusRedirection: false,
             email: '',
             username: '',
             password: '',
             bio: '',
             isAdmin: '0',
+            userId: 0,
+            token: "",
             items:[]
         }
     }
@@ -35,6 +36,7 @@ export default class SignupUser extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         this.setState({
+
             email: this.state.email,
             username: this.state.username,
             bio: this.state.bio,
@@ -65,27 +67,38 @@ export default class SignupUser extends Component {
             
             fetch("http://localhost:4200/api/user/signup", requestOptions)
             .then(response => {
+                console.log(response.status)
                 if (response.status === 200){
-                    this.props.history.push('/chargement')
+                    this.setState({
+                        statusRedirection: true,
+                    })
                 }
                 return response.json();
             })
             .then(json => {
                 if (json.username ) {
-                    sessionStorage.setItem("connect", true);
-                    sessionStorage.setItem("userId", json.userId);
-                    sessionStorage.setItem("username", json.username);
-                    sessionStorage.setItem("email", json.email);
-                    sessionStorage.setItem("bio", json.bio);
-                    sessionStorage.setItem("token", json.token);
+                    const user = {
+                        connect: true,
+                        userId:  json.userId,
+                        username : json.username,
+                        email : json.email,
+                        bio : json.bio,
+                        isAdmin : json.isAdmin,
+                        token : json.token
+                    }
+                    this.setState(user)
+                    this.props.changeUser(user)
                 }
             })
             .catch(error => console.log('error', error));
     } 
 
     render() {
+        
+        
         return (
             <div >
+                {this.state.statusRedirection ? (<Redirect to="/user" />) : (null)}
                 <div className="row justify-content-center">
                     <form onSubmit={this.onSubmit}>
                         <img className="form  mt-5" src={LogoGroup} alt="logo groupomania" style={{ height: "150px"}} />

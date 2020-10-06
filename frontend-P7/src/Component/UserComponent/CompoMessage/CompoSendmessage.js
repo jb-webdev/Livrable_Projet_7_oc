@@ -10,19 +10,19 @@ import {Redirect} from'react-router-dom';
 export default class CompoSendmessage extends Component {
     constructor(props){
         super(props);
-    this.state = {
-        redirection: false,
-        sendMessage : true,
-        username : sessionStorage.getItem("username"),
-        title: '',
-        content: '',
-        idUser: sessionStorage.getItem("userId"),
-        attachement:'',
-        likes: '',
-        itemsSendMessage : [],
-        token : sessionStorage.getItem("token"),
+        this.state = {
+            redirection: false,
+            sendMessage : true,
+            username : this.props.value.username,
+            title: '',
+            content: '',
+            idUser: this.props.value.userId,
+            attachement:'',
+            likes: '',
+            itemsSendMessage : [],
+            token : this.props.value.token,
+        }
     }
-}
 
     onChange = (event) => {
         this.setState({
@@ -91,7 +91,6 @@ export default class CompoSendmessage extends Component {
                                 value={this.state.title}
                             />
                         </div>
-            
                         <div className="form-group">
                             <label htmlFor="textarea" >Nouveau message</label>
                             <textarea 
@@ -101,7 +100,6 @@ export default class CompoSendmessage extends Component {
                                 onChange={this.onChange}
                                 value={this.state.content}
                             >
-
                             </textarea>
                         </div>
                     </form>

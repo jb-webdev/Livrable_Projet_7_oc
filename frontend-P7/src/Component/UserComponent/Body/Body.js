@@ -12,26 +12,31 @@ import "./Body.css";
 import CompoSendmessage from '../CompoMessage/CompoSendmessage';
 import ModifyMessage from '../CompoMessage/ModifyMessage'
 import {Redirect} from'react-router-dom';
+import { UserContext } from '../../Connection/UserContext';
 
 export default class Body extends Component {
-
-    state = {  // renseigne toutes les infos utilisateur de la page ici
-        redirection: false,
-        isAdmin : sessionStorage.getItem("isAdmin"),
-        idUser : sessionStorage.getItem('userId'), 
-        token: sessionStorage.getItem('token'),  
-        messageDelete  : '',
-        showMessage : true,
-        showModify : false,
-        allMessageApi : [],
+    constructor(props) {
+        super(props)
+        this.state = {  // renseigne toutes les infos utilisateur de la page ici
+            redirection: false,
+            isAdmin : this.props.value.isAdmin,
+            idUser : this.props.value.userId, 
+            token: this.props.value.token,  
+            messageDelete  : '',
+            showMessage : true,
+            showModify : false,
+            allMessageApi : [],
+        }
     }
     
+    dataUser = (user => {
+        console.log(user.isAdmin)
+    })
     montrerMessage = () => {
         this.setState({
             showMessage: !this.state.showMessage,
         })
     }
-
     showModify = e => {
         e.preventDefault();
         const targetName = e.target.name;
@@ -50,6 +55,7 @@ export default class Body extends Component {
         const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
             myHeaders.append("Authorization", "Bearer " + this.state.token);
+            console.log( "controle du token avant envoi => " + this.state.token)
 
         const urlencoded = new URLSearchParams();
             urlencoded.append("idUser", this.state.idUser);
@@ -79,78 +85,81 @@ export default class Body extends Component {
         }
     // REQUETE FETCH POUR RECUPERER TOUS LES MESSAGES
     componentDidMount(){
-        const myHeaders = new Headers();
+            const myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer " + this.state.token);
-
-        const requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-          };
-          
-          fetch("http://localhost:4200/api/message/all", requestOptions)
-            .then(response => {
-                return response.json()
-            })
-            .then(json => {
-                this.setState({
-                    allMessageApi : json,
+            
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            
+            fetch("http://localhost:4200/api/message/all", requestOptions)
+                .then(response => {
+                    return response.json()
                 })
-            })
-            .catch(error => console.log('error', error));
-    }
+                .then(json => {
+                    this.setState({
+                        allMessageApi : json,
+                    })
+                })
+                .catch(error => console.log('error', error));
+    } 
+    
     render() {
-        return (
-            <div className ="container">
-            {this.state.redirection ? (<Redirect to="/chargement"/>): (null)}
-            {this.state.showModify ? (<ModifyMessage />) : (null)}
-                <nav>
-                     <div className="nav nav-tabs " role="tablist" >
-                         <button className="nav-link bg-primary active" type="submit" data-toggle="tab" onClick={this.montrerMessage} >Messagerie</button>
-                         <button className="nav-link" type="submit" data-toggle="tab" onClick={this.montrerMessage} >Nouveau message</button>
-                     </div>
-                 </nav>
-                 <div className="tab-content">
-                     <div className="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-home-tab">
-                     {this.state.showMessage ?(
-                        <div>
-                            {this.state.allMessageApi.map((allMessages) => 
-                                <div className=" row media test-muted pt-3" label={allMessages.idMESSAGE} key={allMessages.idMESSAGE + allMessages.idAuthor} name={allMessages.idAuthor}>
-                                    <img className="mr-3" src={AvatarUser} alt="avatar user" width="32" height="32"/>
-                                    <div className="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray col-sm-9">
-                                        <strong className="d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.username}name={allMessages.username}>@ {allMessages.username}</strong>
-                                        <strong className="titleMessage d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.title}>{allMessages.title}</strong>
-                                        <p className="contentMessage" key={allMessages.idMESSAGE + allMessages.content}>{allMessages.content}</p>
-                                        
-                                    </div>
-                                    {this.state.isAdmin == 1 || this.state.idUser == allMessages.idAuthor? (
-                                        
-                                    <div className="modifyBox col-sm-3">
-                                        <button onClick={this.showModify}
-                                            className="btn btnBox w-10 btn-sm btn-outline-primary btn-block mt-3" 
-                                            type="onclick"
-                                            name={allMessages.idMESSAGE}
-                                        >
-                                            modifier
-                                        </button>
-                                        <button onClick={this.suppMessage}
-                                            className="btn btnBox w-10 btn-sm btn-outline-danger btn-block mt-3" 
-                                            type="onclick"
-                                            name={allMessages.idMESSAGE}
-                                        >
-                                            Supprimer
-                                        </button>
-                                    </div>
-                                    ) : <p></p> }
-                                </div> 
-                            )} 
+        
+        return <UserContext.Consumer >
+            {user =>
+                <div className ="container">
+                {this.state.redirection ? (<Redirect to="/chargement"/>): (null)}
+                {this.state.showModify ? (<ModifyMessage value={user} />) : (null)}
+                    <nav>
+                        <div className="nav nav-tabs " role="tablist" >
+                            <button className="nav-link bg-primary active" type="submit" data-toggle="tab" onClick={this.montrerMessage} >Messagerie</button>
+                            <button className="nav-link" type="submit" data-toggle="tab" onClick={this.montrerMessage} >Nouveau message</button>
                         </div>
-                     ) : <CompoSendmessage />}
+                    </nav>
+                    <div className="tab-content">
+                        <div className="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-home-tab">
+                         {this.state.showMessage ?(
+                            <div>
+                                {this.state.allMessageApi.map((allMessages) => 
+                                    <div className=" row media test-muted pt-3" label={allMessages.idMESSAGE} key={allMessages.idMESSAGE + allMessages.idAuthor} name={allMessages.idAuthor}>
+                                        <img className="mr-3" src={AvatarUser} alt="avatar user" width="32" height="32"/>
+                                        <div className="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray col-sm-9">
+                                            <strong className="d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.username}name={allMessages.username}>@ {allMessages.username}</strong>
+                                            <strong className="titleMessage d-block text-gray-dark" key={allMessages.idMESSAGE + allMessages.title}>{allMessages.title}</strong>
+                                            <p className="contentMessage" key={allMessages.idMESSAGE + allMessages.content}>{allMessages.content}</p>
+                                            
+                                        </div>
+                                        {this.state.isAdmin == 1 || this.state.idUser == allMessages.idAuthor? (
+                                            
+                                        <div className="modifyBox col-sm-3">
+                                            <button onClick={this.showModify}
+                                                className="btn btnBox w-10 btn-sm btn-outline-primary btn-block mt-3" 
+                                                type="onclick"
+                                                name={allMessages.idMESSAGE}
+                                            >
+                                                modifier
+                                            </button>
+                                            <button onClick={this.suppMessage}
+                                                className="btn btnBox w-10 btn-sm btn-outline-danger btn-block mt-3" 
+                                                type="onclick"
+                                                name={allMessages.idMESSAGE}
+                                            >
+                                                Supprimer
+                                            </button>
+                                        </div>
+                                        ) : <p></p> }
+                                    </div> 
+                                )} 
+                            </div>
+                        ) : (<CompoSendmessage value={user} />)}
+                        </div>
                     </div>
                 </div>
-                
-            </div>
-        )
+            }
+            </UserContext.Consumer>
     }
 }
 
