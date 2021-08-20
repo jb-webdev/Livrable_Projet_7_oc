@@ -36,7 +36,7 @@ _Côté user_
 |GET|/api/user/all|Pour recuperer tous les utilisateurs|    
 |GET|/api/user/admin|Pour supprimer un utilisateur  // UNIQUEMENT ADMIN|  
   
-### Côté Message
+_Côté Message_
 |Routes|Path|Description|
 | :------| :-----------------| :--------------------------|
 |POST|/api/message/|Pour la création de message|    
