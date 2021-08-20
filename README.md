@@ -1,43 +1,46 @@
-PORJET 7 - GROUPOMANIA - septembre 2020
-## Auteur => j.boero
+# Créez un réseau social d’entreprise
+_Projet 7 - GROUPOMANIA - septembre 2020_
 
-## Côté FRONTEND
-Application réaliser avec REACT
+## Mission 
+Créer le réseau social d'une entreprise et manipuler des bases de données SQL.  
 
-lancement de l'application => npm start
+## Compétences évaluées  
 
-Sur le port : 3000
+* Personnaliser le contenu envoyé à un client web
+* Authentifier un utilisateur et maintenir sa session
+* Gérer un stockage de données à l'aide de SQL
+* Implémenter un stockage de données sécurisé en utilisant SQL
 
-## Côte BACKEND 
+## Techno utilisés pour le projet  
 
-## API 
-LANCEMENT SERVER =>  nodemon server => Sur le port : 4200
+* ### frontend
+  * HTML
+  * CSS
+  * Bootstrap
+  * ReactJs
+  * Javascript
+* ### Backend
+  * Javascript
+  * Express
+* ## BDD
+  * Mysql _*fichier groupomaniadb.sql*_
 
-                Les routes à utilisé 
-## ###################################################
+## API REST / Routes
+_Côté user_
+|-------------|-----------------|-----------------------------------------|
+| POST |  /api/user/signup | Pour la création d'un utilisateur |
+| GET | /api/user/login | Pour recupere les infos de connection |
+| PUT | /api/user/ | Pour modifier la bio de l'utilisateur |
+| GET | /api/user/all | Pour recuperer tous les utilisateurs |     
+| GET | /api/user/admin | Pour supprimer un utilisateur  // UNIQUEMENT ADMIN |  
+  
+### Côté Message
+|-------------|-----------------|-----------------------------------------|
+| POST | /api/message/ | Pour la création de message |    
+| GET | /api/message/all | Pour recuperer tous les messages |
+| GET | /api/message/author | Pour recuperer tous les message de l'utilisateur | 
+| DELETE | /api/message/delete | Pour supprimer un message // UNIQUEMENT ADMIN ET L'UTILISATEUR |
+| GET | /api/message/: | Pour recupere un message |
+| PUT | /api/message/modify | Pour modifier un message // UNIQUEMENT ADMIN ET L'UTILISATEUR |
 
-## côté USER
-post    => /api/user/signup  => Pour la création d'un utilisateur
-get     => /api/user/login   => Pour recupere les infos de connection
-put     => /api/user/        => Pour modifier la bio de l'utilisateur
-get     => /api/user/all     => Pour recuperer tous les utilisateurs     
-get     => /api/user/admin   => Pour supprimer un utilisateur  // UNIQUEMENT ADMIN
-
-## côté MESSAGE
-post    =>   /api/message/         => Pour la création de message    
-get     =>   /api/message/all      => pour recuperer tous les messages
-get     =>   /api/message/author   => pour recuperer tous les message de l'utilisateur 
-delete  =>   /api/message/delete   => pour supprimer un message // UNIQUEMENT ADMIN ET L'UTILISATEUR
-get     =>   /api/message/:        => pour recupere un message
-put     =>   /api/message/modify   => pour modifier un message // UNIQUEMENT ADMIN ET L'UTILISATEUR
-
-## Base de données 
-
-Realisé Avec Mysql, 
-
-Sauvegarde presente dans le fichier groupomaniadb.sql
-
-
-
-
-
+## Formation developpeur web Openclassrooms / projet 7

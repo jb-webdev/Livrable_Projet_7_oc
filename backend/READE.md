@@ -39,10 +39,11 @@ npm install -g nodemon
 npm install --save nodemon
 npm install --save mysql
 npm install --save mysql2
-
-npm install --save body-parser  /  const bodyParser = require('body-parser');
 npm install --save bcrypt
 npm install --save jsonwebtoken
+
+npm install --save body-parser  
+const bodyParser = require('body-parser');
 
 
 
