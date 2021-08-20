@@ -27,12 +27,14 @@ Créer le réseau social d'une entreprise et manipuler des bases de données SQL
 
 ## API REST / Routes
 _Côté user_
-|-------------|-----------------|-----------------------------------------|
-| POST |  /api/user/signup | Pour la création d'un utilisateur |
-| GET | /api/user/login | Pour recupere les infos de connection |
-| PUT | /api/user/ | Pour modifier la bio de l'utilisateur |
-| GET | /api/user/all | Pour recuperer tous les utilisateurs |     
-| GET | /api/user/admin | Pour supprimer un utilisateur  // UNIQUEMENT ADMIN |  
+
+
+|-------|-------------------|----------------------------------------------------|
+| POST  | /api/user/signup  | Pour la création d'un utilisateur                  |
+| GET   | /api/user/login   | Pour recupere les infos de connection              |
+| PUT   | /api/user/        | Pour modifier la bio de l'utilisateur              |
+| GET   | /api/user/all     | Pour recuperer tous les utilisateurs               |     
+| GET   | /api/user/admin   | Pour supprimer un utilisateur  // UNIQUEMENT ADMIN |  
   
 ### Côté Message
 |-------------|-----------------|-----------------------------------------|
